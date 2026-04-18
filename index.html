@@ -214,6 +214,9 @@
   <!-- GAME OVERLAYS -->
   <div id="swish-game-overlay"><div class="game-card"><span class="close-game" onclick="closeSwishGame()">&times;</span><h2>SWISH CHALLENGE</h2><div style="display:flex; justify-content:space-around; margin:20px 0; font-weight:bold;"><div>TIME: <span id="game-sec">10</span>s</div><div>SWISHES: <span id="game-count">0</span></div></div><button id="swish-action-btn" onclick="addSwish()" disabled>Swish!</button><br><button onclick="startSwishGame()" style="margin-top:20px; padding:10px 30px; background:#1d3c28; color:#f3f2e8; border:none; border-radius:50px; cursor:pointer;">Start Game</button></div></div>
   <div id="hurray-popup"><div class="hurray-card" id="hurray-card"><h1>🎉</h1><p id="hurray-msg" style="font-weight:bold; margin:20px 0;">Hurray! Excellent hygiene!</p><button onclick="closeHurray()" style="padding:10px 30px; background:#25d366; color:#fff; border:none; border-radius:50px; cursor:pointer;">Great!</button></div></div>
+  
+  <!-- SOUNDS -->
+  <audio id="click-sound" src="click.mp3"></audio> <!-- ADD THIS FILE TO YOUR FOLDER -->
   <audio id="victory-sound" src="victory.mp3"></audio>
 
   <script>
@@ -240,11 +243,15 @@
     function handleNavigation(url) { document.getElementById('loader').classList.remove('loader-finish'); setTimeout(() => { window.location.href = url; }, 1200); }
 
     // GAME LOGIC
-    let sScore = 0, sTime = 80, sClock, sActive = false;
+    let sScore = 0, sTime = 10, sClock, sActive = false;
     function openSwishGame() { document.getElementById('swish-game-overlay').style.display = 'flex'; resetSwish(); }
     function closeSwishGame() { document.getElementById('swish-game-overlay').style.display = 'none'; clearInterval(sClock); sActive = false; }
+    
     function startSwishGame() {
-      sScore = 0; sTime = 10; sActive = true; document.getElementById('swish-action-btn').disabled = false;
+      sScore = 0; sTime = 10; sActive = true; 
+      document.getElementById('swish-action-btn').disabled = false;
+      document.getElementById('game-count').innerText = 0;
+      
       sClock = setInterval(() => {
         sTime--; document.getElementById('game-sec').innerText = sTime;
         if (sTime <= 0) {
@@ -258,7 +265,20 @@
         }
       }, 1000);
     }
-    function addSwish() { if (sActive) { sScore++; document.getElementById('game-count').innerText = sScore; } }
+
+    // UPDATED FUNCTION WITH CLICK SOUND
+    function addSwish() { 
+      if (sActive) { 
+        sScore++; 
+        document.getElementById('game-count').innerText = sScore; 
+        
+        // Play Click Sound
+        const snd = document.getElementById('click-sound');
+        snd.currentTime = 0; // Reset sound position to allow rapid clicking
+        snd.play().catch(e => { console.log("Sound error") }); 
+      } 
+    }
+
     function closeHurray() { document.getElementById('hurray-card').classList.remove('show'); setTimeout(() => { document.getElementById('hurray-popup').style.display = 'none'; resetSwish(); }, 500); }
     function resetSwish() { sScore = 0; sTime = 10; document.getElementById('game-count').innerText = 0; document.getElementById('game-sec').innerText = 10; }
     document.getElementById('cart-display').innerText = `🛒 (${localStorage.getItem('sh_cart_count') || 0})`;
