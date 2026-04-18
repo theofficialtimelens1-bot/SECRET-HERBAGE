@@ -102,13 +102,14 @@
     .footer-section a:hover { opacity: 1; transform: translateX(12px); font-weight: bold; }
     .copyright { font-size: 11px; opacity: 0.4; letter-spacing: 3px; text-transform: uppercase; border-top: 1px solid rgba(0,0,0,0.1); padding-top: 40px; width: 100%; text-align: center; }
 
-    /* FIXED SOCIALS & AI (RESTORED) */
+    /* FIXED SOCIALS & AI */
     .social-float { position: fixed; left: 30px; z-index: 99999; width: 60px; height: 60px; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; box-shadow: 2px 2px 15px rgba(0,0,0,0.3); transition: 0.3s; }
     .whatsapp-float { bottom: 110px; background-color: #25d366; }
     .insta-float { bottom: 30px; background: linear-gradient(45deg, #f09433, #bc1888); }
     .social-float:hover { transform: scale(1.1); }
 
-    #ai-assistant { position: fixed; right: 30px; bottom: 30px; z-index: 100000; }
+    /* HELPER POSITION CHANGED TO RIGHT SIDE CENTER */
+    #HELPER { position: fixed; right: 30px; top: 50%; transform: translateY(-50%); z-index: 100000; }
     .ai-btn { background: #1d3c28; color: #f3f2e8; width: 60px; height: 60px; border-radius: 50%; border: none; font-size: 25px; cursor: pointer; box-shadow: 0 10px 30px rgba(0,0,0,0.2); transition: 0.3s; }
     .chat-window { position: absolute; bottom: 80px; right: 0; width: 300px; background: #f3f2e8; border: 1px solid #1d3c28; border-radius: 15px; display: none; flex-direction: column; box-shadow: 0 10px 40px rgba(0,0,0,0.2); overflow: hidden; }
 
@@ -129,7 +130,8 @@
         .nav-right { gap: 15px !important; }
         .social-float { left: 15px; width: 50px; height: 50px; font-size: 22px; }
         .whatsapp-float { bottom: 90px; } .insta-float { bottom: 25px; }
-        #ai-assistant { right: 15px; bottom: 25px; } .ai-btn { width: 50px; height: 50px; font-size: 20px; }
+        #HELPER { right: 15px; top: 50%; transform: translateY(-50%); } 
+        .ai-btn { width: 50px; height: 50px; font-size: 20px; }
         .promo-bottle-img { width: 300px !important; }
     }
 
