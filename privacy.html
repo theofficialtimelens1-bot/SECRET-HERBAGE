@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Policy – Secret Herbage</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    /* Page Opening Animation */
+    body { 
+      background-color: #f3f2e8; 
+      color: #1d3c28; 
+      font-family: 'Playfair Display', serif, 'Times New Roman'; 
+      line-height: 1.8;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: pageReveal 1s ease forwards;
+    }
+    
+    @keyframes pageReveal {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* HEADER WITH HOME LEFT & LOGO CENTER */
+    .header { width: 100%; padding-top: 15px; border-bottom: 1px solid rgba(29, 60, 40, 0.1); padding-bottom: 20px; }
+    .tagline { display: block; text-align: center; font-size: 11px; text-transform: uppercase; letter-spacing: 6px; font-weight: 700; margin-bottom: 15px; opacity: 0.8; }
+    
+    .nav-bar-privacy { 
+      display: flex; 
+      align-items: center; 
+      justify-content: space-between; 
+      padding: 0 6%;
+    }
+    
+    .home-btn { 
+      text-decoration: none; color: #1d3c28; border: 1.5px solid #1d3c28;
+      padding: 10px 25px; font-size: 12px; font-weight: bold; letter-spacing: 2px;
+      text-transform: uppercase; transition: 0.3s;
+    }
+    .home-btn:hover { background-color: #1d3c28; color: #f3f2e8; }
+    
+    .brand-logo { height: 130px; width: auto; }
+
+    /* POLICY CONTENT */
+    .policy-container { max-width: 900px; margin: 60px auto; padding: 0 25px; }
+    .policy-container h1 { font-size: 36px; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 2px; font-weight: bold; }
+    .effective-date { font-size: 14px; opacity: 0.7; margin-bottom: 40px; display: block; font-style: italic; }
+    
+    .policy-section { margin-bottom: 35px; }
+    .policy-section h2 { font-size: 20px; text-transform: uppercase; margin-bottom: 15px; border-bottom: 1px solid #1d3c28; display: inline-block; padding-bottom: 5px; font-weight: bold; }
+    .policy-section p { font-size: 16px; opacity: 0.9; margin-bottom: 10px; }
+
+    /* FOOTER (Same Animated Style as Home) */
+    .footer { background-color: #f3f2e8; padding: 80px 6% 40px 6%; border-top: 1px solid rgba(29, 60, 40, 0.1); display: flex; flex-direction: column; align-items: center; margin-top: 80px; }
+    .footer-content { width: 100%; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 50px; margin-bottom: 60px; }
+    .footer-section h3 { font-size: 15px; text-transform: uppercase; letter-spacing: 4px; margin-bottom: 25px; font-weight: bold; }
+    
+    .footer-section p, .footer-section a { 
+      font-size: 14px; color: #1d3c28; text-decoration: none; 
+      display: flex; align-items: center; gap: 15px; margin-bottom: 18px; 
+      opacity: 0.7; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+      width: fit-content;
+    }
+    .footer-section a:hover, .footer-section p:hover { 
+      opacity: 1; transform: translateX(12px) scale(1.03); font-weight: bold; 
+    }
+
+    .copyright { font-size: 11px; opacity: 0.4; text-transform: uppercase; letter-spacing: 3px; border-top: 1px solid rgba(29, 60, 40, 0.1); padding-top: 40px; width: 100%; text-align: center; }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="tagline">Nature's Secret Smile for You</div>
+    <div class="nav-bar-privacy">
+      <!-- Home Button Left -->
+      <a href="index.html" class="home-btn">HOME</a>
+      
+      <!-- Logo Center -->
+      <img src="logo.png" alt="Logo" class="brand-logo">
+      
+      <!-- Spacer for centering -->
+      <div style="width: 120px;"></div>
+    </div>
+  </header>
+
+  <div class="policy-container">
+    <h1>Policy – Secret Herbage</h1>
+    <span class="effective-date">Effective Date: 16 April 2026</span>
+
+    <p style="margin-bottom: 30px;">Secret Herbage is committed to providing safe and reliable service to its customers. This policy explains how we handle orders, delivery, and customer information.</p>
+
+    <div class="policy-section">
+      <h2>1. Products</h2>
+      <p>Secret Herbage currently offers a natural wellness product, Pulling Oil. Every product is carefully checked before packaging to ensure quality.</p>
+    </div>
+
+    <div class="policy-section">
+      <h2>2. Orders</h2>
+      <p>After placing an order, we may contact you via phone or WhatsApp for confirmation. Please make sure all your details are correct.</p>
+    </div>
+
+    <div class="policy-section">
+      <h2>3. Payment Method</h2>
+      <p>We only offer Cash on Delivery (COD). Payment must be made in cash at the time of delivery.</p>
+    </div>
+
+    <div class="policy-section">
+      <h2>4. Delivery</h2>
+      <p>We ensure safe packaging and delivery of all orders. Delivery time may vary depending on your location. Secret Herbage is not responsible for delays caused by courier services or unforeseen circumstances.</p>
+    </div>
+
+    <div class="policy-section">
+      <h2>5. Refund / Replacement</h2>
+      <p>If you receive a damaged or wrong product, please contact us within 24–48 hours of delivery. After verification, we may offer a replacement or an appropriate solution. No claims will be accepted after the given time period.</p>
+    </div>
+
+    <div class="policy-section">
+      <h2>6. Customer Responsibility</h2>
+      <p>Customers are responsible for providing accurate details such as name, address, and phone number. Incorrect information may result in delayed or failed delivery.</p>
+    </div>
+
+    <div class="policy-section">
+      <h2>7. Contact</h2>
+      <p><strong>Email:</strong> secretherbage@gmail.com</p>
+      <p><strong>Phone / WhatsApp:</strong> +92 333 0341982</p>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Contact</h3>
+        <p><i class="fas fa-envelope"></i> secretherbage@gmail.com</p>
+        <p><i class="fas fa-map-marker-alt"></i> Based in Pakistan.</p>
+      </div>
+      <div class="footer-section">
+        <h3>Quick Links</h3>
+        <a href="Untitled-2.html">Home</a>
+        <a href="privacy.html">Privacy Policy</a>
+      </div>
+      <div class="footer-section">
+        <h3>Community</h3>
+        <div style="display: flex; flex-direction: column;">
+          <a href="https://www.instagram.com/secretherbage" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+          <a href="https://www.facebook.com/secretherbage" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
+        </div>
+      </div>
+    </div>
+    <div class="copyright">&copy; 2026 Secret Herbage Pakistan. All Rights Reserved.</div>
+  </footer>
+
+</body>
+</html>

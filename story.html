@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Story | Secret Herbage</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background-color: #f3f2e8; color: #1d3c28;
+      font-family: 'Playfair Display', serif, 'Times New Roman';
+      margin: 0; width: 100%; height: 100vh; overflow: hidden;
+    }
+    /* LOADER WAHI HAI JO MAIN PAGE PE HAI */
+    #loader {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+      background: #1d3c28; display: flex; justify-content: center; align-items: center;
+      z-index: 9999999; transition: transform 1.2s cubic-bezier(0.85, 0, 0.15, 1);
+    }
+    .loader-logo {
+      color: #f3f2e8; font-size: 28px; letter-spacing: 15px; text-transform: uppercase;
+      font-weight: 300; animation: loaderPulse 1.5s ease-in-out infinite;
+    }
+    @keyframes loaderPulse { 0%, 100% { opacity: 0.3; transform: scale(0.98); } 50% { opacity: 1; transform: scale(1); } }
+    .loader-finish { transform: translateY(-100%); }
+    #website { opacity: 0; transition: opacity 1s ease 0.5s; }
+    .show-site { opacity: 1 !important; }
+
+    /* CONTENT STYLE */
+    .container { max-width: 800px; margin: 100px auto; padding: 0 40px; text-align: center; line-height: 1.8; }
+    h1 { font-size: 45px; margin-bottom: 30px; letter-spacing: 5px; }
+    p { font-size: 18px; margin-bottom: 25px; opacity: 0.9; }
+    .back-btn { display: inline-block; margin-top: 30px; text-decoration: underline; color: #1d3c28; cursor: pointer; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; }
+  </style>
+</head>
+<body>
+
+  <div id="loader"><div class="loader-logo">Secret Herbage</div></div>
+
+  <div id="website">
+    <div class="container">
+      <h1>🌿 Our Story</h1>
+      <p>Rooted in traditional wellness practices passed down through generations, our journey began with a simple belief — nature already holds the answers to true oral care. Inspired by ancient oral hygiene rituals, we created a modern formulation of pulling oil that blends purity, simplicity, and effectiveness.</p>
+      
+      <p>Our brand is built on the idea of bringing back natural care routines in a way that fits today’s lifestyle. Every bottle reflects our commitment to clean ingredients and mindful self-care, helping you maintain a fresh smile the natural way.</p>
+      
+      <p>We believe healthy habits create confident smiles — and we’re here to support that journey, one oil pull at a time.</p>
+      
+      <!-- Wapsi ke liye bhi loader function -->
+      <a class="back-btn" onclick="handleNav('index.html')">Back to Home</a>
+    </div>
+  </div>
+
+  <script>
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('loader').classList.add('loader-finish');
+        document.getElementById('website').classList.add('show-site');
+        document.body.style.overflow = 'visible';
+      }, 1500);
+    });
+
+    function handleNav(url) {
+      document.getElementById('loader').classList.remove('loader-finish');
+      setTimeout(() => { window.location.href = url; }, 1000);
+    }
+  </script>
+</body>
+</html>
