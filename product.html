@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Pulling Oil | Secret Herbage</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pulling Oil | Secret Herbage Shop</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <style>
     /* THEME & BASE */
@@ -75,12 +76,6 @@
     .social-float:hover { transform: scale(1.1); }
 
     @media (max-width: 900px) { .vertical-promo, .social-float { display: none; } .product-container, .footer { margin-left: 0; padding-left: 6%; } }
-    body { background-color: #f3f2e8; color: #1d3c28; font-family: 'Playfair Display', serif; }
-    .header { padding: 40px 6%; text-align: center; border-bottom: 1px solid rgba(0,0,0,0.1); }
-    .product-container { padding: 60px 6%; display: flex; gap: 50px; flex-wrap: wrap; justify-content: center; }
-    .info { max-width: 500px; }
-    #discount-note { display: none; background: #e8f5e9; padding: 15px; border-left: 5px solid #2ecc71; margin-bottom: 20px; font-weight: bold; }
-    .btn { background: #1d3c28; color: #f3f2e8; padding: 15px 40px; border: none; cursor: pointer; font-weight: bold; text-decoration: none; display: inline-block; }
   </style>
 </head>
 <body>
@@ -142,8 +137,9 @@
           </ul>
         </div>
       </div>
-    </div>    
-       <!-- FOOTER (RESTORED) -->
+    </div>
+
+    <!-- FOOTER (RESTORED) -->
     <footer class="footer">
       <div class="footer-content">
         <div class="footer-section">
@@ -169,22 +165,72 @@
     <a href="https://wa.me/923330341982" class="social-float whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
     <a href="https://www.instagram.com/secretherbage/" class="social-float insta-float" target="_blank"><i class="fab fa-instagram"></i></a>
   </div>
+
   <script>
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('loader').classList.add('loader-finish');
+        document.getElementById('website-wrapper').classList.add('show-site');
+        document.body.style.overflowY = 'visible';
+        checkDiscount();
+      }, 1000);
+    });
+
     function checkDiscount() {
-      if(localStorage.getItem('sh_discount_unlocked') === 'true') {
-        document.getElementById('old-price').style.display = "inline";
-        document.getElementById('current-price').innerText = "Rs. 1,200";
+      const hasDiscount = localStorage.getItem('sh_discount_50') === 'true';
+      if (hasDiscount) {
+        document.getElementById('current-price').innerText = "Rs. 1,200.00";
+        document.getElementById('current-price').style.color = "#d35400";
+        document.getElementById('discount-badge').innerText = "50% OFF APPLIED";
+        document.getElementById('discount-badge').style.background = "#d35400";
         document.getElementById('discount-note').style.display = "block";
       }
     }
-    function addToCart() {
-      localStorage.setItem('sh_cart_count', 1);
-      document.getElementById('add-btn').style.display = "none";
-      document.getElementById('check-btn').style.display = "inline-block";
-      syncCart();
+
+    function handleCheckout() {
+      const loader = document.getElementById('loader');
+      loader.classList.remove('loader-finish');
+      setTimeout(() => { window.location.href = 'checkout.html'; }, 1000);
     }
-    function syncCart() { document.getElementById('cart-display').innerText = `🛒 (${localStorage.getItem('sh_cart_count') || 0})`; }
-    window.onload = () => { checkDiscount(); syncCart(); };
+
+    const slider = document.getElementById('main-slider');
+    const zoomImages = document.querySelectorAll('.zoom-img');
+    slider.addEventListener('mousemove', (e) => {
+      const rect = slider.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width) * 100;
+      const y = ((e.clientY - rect.top) / rect.height) * 100;
+      zoomImages.forEach(img => { img.classList.add('zoomed'); img.style.transformOrigin = `${x}% ${y}%`; });
+    });
+    slider.addEventListener('mouseleave', () => { zoomImages.forEach(img => img.classList.remove('zoomed')); });
+
+    const addBtn = document.getElementById('add-to-cart-btn');
+    const qtySelector = document.getElementById('qty-selector');
+    const checkoutLink = document.getElementById('checkout-link');
+    const qtyDisplay = document.getElementById('qty-display');
+    const cartDisplay = document.getElementById('cart-display');
+
+    function syncUI() {
+      let count = parseInt(localStorage.getItem('sh_cart_count') || 0);
+      cartDisplay.innerText = `🛒 (${count})`;
+      if (count > 0) {
+        addBtn.style.display = 'none';
+        qtySelector.style.display = 'flex';
+        checkoutLink.style.display = 'block';
+        qtyDisplay.innerText = count;
+      } else {
+        addBtn.style.display = 'block';
+        qtySelector.style.display = 'none';
+        checkoutLink.style.display = 'none';
+      }
+    }
+
+    addBtn.addEventListener('click', () => { localStorage.setItem('sh_cart_count', 1); syncUI(); });
+    window.updateQty = function(val) {
+      let count = parseInt(localStorage.getItem('sh_cart_count') || 0) + val;
+      if (count < 0) count = 0;
+      localStorage.setItem('sh_cart_count', count);
+      syncUI();
+    }
   </script>
 </body>
 </html>
