@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SECRET HERBAGE</title>
   
-  <!-- WEBSITE LOGO ON TAB (FAVICON) -->
+  <!-- LOGO ON BROWSER TAB -->
   <link rel="icon" type="image/png" href="logo.png">
   
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -17,8 +17,8 @@
 
     /* --- PREMIUM SEQUENTIAL LOADER --- */
     #loader { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: #f3f2e8; display: flex; justify-content: center; align-items: center; z-index: 9999999; overflow: hidden; }
-    #website { opacity: 0; filter: blur(30px); transition: opacity 1s ease, filter 1.5s ease; position: relative; width: 100%; overflow-x: hidden; }
-    .show-site { opacity: 1 !important; filter: blur(0) !important; }
+    #website { opacity: 0; filter: blur(20px); transition: opacity 1.5s ease, filter 1.5s ease; position: relative; width: 100%; overflow-x: hidden; visibility: hidden; }
+    .show-site { opacity: 1 !important; filter: blur(0) !important; visibility: visible !important; }
 
     /* SMOKE EFFECT */
     .smoke-container { position: absolute; width: 100%; height: 100%; top: 0; left: 0; overflow: hidden; pointer-events: none; z-index: 10; }
@@ -26,7 +26,6 @@
     .smoke-particle:nth-child(1) { left: -10%; }
     .smoke-particle:nth-child(2) { left: 30%; width: 900px; animation-delay: 0.5s; }
     .smoke-particle:nth-child(3) { left: 60%; animation-delay: 0.2s; }
-    .smoke-particle:nth-child(4) { left: 85%; width: 800px; animation-delay: 0.8s; }
     @keyframes herbalSmokeRise { 0% { transform: translateY(0) scale(1); opacity: 0; } 20% { opacity: 1; } 80% { opacity: 0.8; } 100% { transform: translateY(-130vh) scale(3); opacity: 0; } }
 
     /* WRITING LOADER */
@@ -37,18 +36,14 @@
     @keyframes fillText { 0% { fill: rgba(29, 60, 40, 0); } 100% { fill: rgba(29, 60, 40, 1); } }
     @keyframes fadeInReveal { to { opacity: 1; } }
     @keyframes zoomToFace { 0% { transform: scale(1); opacity: 1; filter: blur(0); } 100% { transform: scale(12); opacity: 0; filter: blur(10px); } }
-    .loader-finish { opacity: 0 !important; visibility: hidden !important; transition: 0.8s ease; }
+    .loader-finish { opacity: 0 !important; visibility: hidden !important; pointer-events: none; transition: 1s ease; }
 
-    /* --- HEADER & PERMANENT ROUND LOGO --- */
+    /* --- HEADER & ROUND LOGO --- */
     .header { width: 100%; padding-top: 15px; position: relative; z-index: 1000; }
     .tagline { display: block; text-align: center; font-size: 11px; text-transform: uppercase; letter-spacing: 6px; font-weight: 700; margin-bottom: 10px; opacity: 0.8; }
     .nav-bar { display: flex; justify-content: space-between; align-items: center; padding: 10px 6%; border-bottom: 1px solid rgba(29, 60, 40, 0.1); position: relative; }
     
-    .brand-logo { 
-      height: 100px !important; width: 100px !important; 
-      object-fit: cover; border-radius: 50% !important; 
-      border: 1.5px solid rgba(29, 60, 40, 0.1); cursor: pointer; transition: 0.3s;
-    }
+    .brand-logo { height: 100px !important; width: 100px !important; object-fit: cover; border-radius: 50% !important; border: 1.5px solid rgba(29, 60, 40, 0.1); cursor: pointer; transition: 0.3s; }
     .brand-logo:hover { transform: scale(1.05); }
 
     .brand-title-center { position: absolute; left: 50%; transform: translateX(-50%); font-size: 28px; font-weight: 900; text-transform: uppercase; letter-spacing: 12px; color: #1d3c28; pointer-events: none; white-space: nowrap; }
@@ -62,7 +57,7 @@
     .dropdown-content a { color: #1d3c28; padding: 15px 20px; text-decoration: none; display: block; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; transition: 0.2s; }
     .dropdown-content a:hover { background-color: #1d3c28; color: #f3f2e8; padding-left: 25px; }
 
-    /* CART DROPDOWN WITH REMOVE MENU */
+    /* CART DROPDOWN */
     .cart-wrapper { position: relative; }
     .cart-btn { text-decoration: none; color: #1d3c28; font-size: 18px; font-weight: bold; cursor: pointer; }
     .cart-dropdown-menu { visibility: hidden; opacity: 0; position: absolute; top: 100%; right: 0; background: #1d3c28; color: #f3f2e8; min-width: 220px; padding: 15px; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); transform: translateY(10px); transition: 0.3s ease; z-index: 2000; }
@@ -71,22 +66,11 @@
     .remove-cart-item { background: #f3f2e8; color: #1d3c28; border: none; padding: 2px 8px; cursor: pointer; font-weight: bold; border-radius: 4px; }
     .checkout-btn-small { display: block; width: 100%; text-align: center; background: #f3f2e8; color: #1d3c28; padding: 8px; text-decoration: none; font-weight: bold; font-size: 11px; margin-top: 10px; }
 
-    /* HERO & REVIEWS */
-    .hero { padding: 100px 20px 60px; text-align: center; }
-    .hero h1 { font-size: clamp(40px, 9vw, 90px); margin-bottom: 30px; line-height: 1.1; }
-    .shop-now { 
-      background: transparent; color: #1d3c28; padding: 20px 60px; border: 1.5px solid #1d3c28; 
-      text-transform: uppercase; letter-spacing: 4px; cursor: pointer; font-weight: bold;
-      position: relative; overflow: hidden; transition: 0.4s; z-index: 1;
-    }
-    .shop-now::before { content: ""; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: #1d3c28; transition: 0.4s; z-index: -1; }
-    .shop-now:hover::before { left: 0; }
-    .shop-now:hover { color: #f3f2e8; }
-
+    /* REVIEWS SECTION */
     .reviews-section { padding: 80px 6%; text-align: center; border-top: 1px solid rgba(29, 60, 40, 0.05); }
     .rating-summary { display: flex; justify-content: center; align-items: center; gap: 10px; margin-bottom: 40px; }
     .stars { color: #f1c40f; font-size: 18px; }
-    .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+    .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 40px; }
     .review-card { background: rgba(29, 60, 40, 0.03); padding: 30px; border-radius: 15px; text-align: left; border: 1px solid rgba(29, 60, 40, 0.05); transition: 0.3s; }
     .review-card:hover { transform: translateY(-10px); background: #fff; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
     .verified-badge { color: #2ecc71; font-size: 11px; font-weight: bold; text-transform: uppercase; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; letter-spacing: 1px; }
@@ -98,17 +82,18 @@
     .footer-section a, .footer-section p { font-size: 14px; color: #1d3c28; text-decoration: none; display: block; margin-bottom: 18px; opacity: 0.7; transition: 0.4s; cursor: pointer; width: fit-content; }
     .footer-section a:hover { opacity: 1; transform: translateX(12px); font-weight: bold; }
 
-    /* --- FIXED SOCIALS & AI (RESTORED) --- */
+    /* FIXED SOCIALS & AI (ALWAYS ON SCREEN) */
     .social-float { position: fixed; left: 30px; z-index: 99999; width: 60px; height: 60px; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; box-shadow: 2px 2px 15px rgba(0,0,0,0.3); transition: 0.3s; }
     .whatsapp-float { bottom: 110px; background-color: #25d366; }
     .insta-float { bottom: 30px; background: linear-gradient(45deg, #f09433, #bc1888); }
-    
-    #ai-assistant { position: fixed; right: 30px; bottom: 30px; z-index: 100000; }
-    .ai-btn { background: #1d3c28; color: #f3f2e8; width: 60px; height: 60px; border-radius: 50%; border: none; font-size: 25px; cursor: pointer; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+    .social-float:hover { transform: scale(1.1); }
 
+    #ai-assistant { position: fixed; right: 30px; bottom: 30px; z-index: 100000; }
+    .ai-btn { background: #1d3c28; color: #f3f2e8; width: 60px; height: 60px; border-radius: 50%; border: none; font-size: 25px; cursor: pointer; box-shadow: 0 10px 30px rgba(0,0,0,0.2); transition: 0.3s; }
+    .ai-btn:hover { transform: scale(1.1); }
     .chat-window { position: absolute; bottom: 80px; right: 0; width: 300px; background: #f3f2e8; border: 1px solid #1d3c28; border-radius: 15px; display: none; flex-direction: column; box-shadow: 0 10px 40px rgba(0,0,0,0.2); overflow: hidden; }
 
-    /* --- GIANT BOTTLE FROM RIGHT CENTER --- */
+    /* GIANT BOTTLE FROM CENTER */
     #bottle-promo-container { position: fixed; top: 50%; right: -700px; transform: translateY(-50%); display: flex; flex-direction: column; align-items: center; z-index: 9998; cursor: pointer; }
     .promo-text-bubble { background: #1d3c28; color: #f3f2e8; padding: 15px 25px; border-radius: 12px; font-size: 15px; font-weight: bold; margin-bottom: -40px; z-index: 2; box-shadow: 0 10px 20px rgba(0,0,0,0.2); white-space: nowrap; opacity: 0; }
     .promo-bottle-img { width: 450px; filter: drop-shadow(0 20px 40px rgba(0,0,0,0.2)); }
@@ -120,7 +105,7 @@
 
     /* MOBILE RESPONSIVE FIXES */
     @media (max-width: 850px) {
-        .writing-container text { font-size: 42px !important; }
+        .writing-container text { font-size: 42px !important; letter-spacing: 4px !important; }
         .brand-title-center { display: none !important; }
         .brand-logo { height: 65px !important; width: 65px !important; }
         .nav-bar { padding: 10px 4% !important; }
@@ -131,11 +116,10 @@
         .promo-bottle-img { width: 300px !important; }
     }
 
-    /* GAME OVERLAYS */
+    /* GAME OVERLAY */
     #swish-game-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(29, 60, 40, 0.98); display: none; justify-content: center; align-items: center; z-index: 1000001; }
     .game-card { background: #f3f2e8; padding: 40px; border-radius: 20px; text-align: center; width: 90%; max-width: 450px; position: relative; box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
     #swish-action-btn { width: 140px; height: 140px; border-radius: 50%; border: 6px solid #1d3c28; background: transparent; color: #1d3c28; font-size: 22px; font-weight: 900; cursor: pointer; outline: none; }
-    #swish-action-btn:active { transform: scale(0.9); background: rgba(29, 60, 40, 0.1); }
   </style>
 </head>
 <body>
@@ -169,7 +153,7 @@
           <div class="dropdown">
             <button class="dropbtn">Fun ▾</button>
             <div class="dropdown-content">
-              <a href="javascript:void(0)" onclick="openSwishGame()">MAINTAIN YOUR ORAL HYGIENE</a>
+              <a href="javascript:void(0)" onclick="openSwishGame()">ORAL CHALLENGE</a>
             </div>
           </div>
           <div class="cart-wrapper">
@@ -186,28 +170,27 @@
     <main>
       <div class="promo-banner" style="background:#1d3c28; color:#f3f2e8; padding:12px 0; overflow:hidden; display:flex; white-space:nowrap;">
         <div style="display:flex; animation: scrollSeamless 20s linear infinite;">
-          <span style="padding-right:100px; font-weight:bold; text-transform:uppercase; letter-spacing:3px;">Delivery all over Pakistan | Buy 1 Get 1 Free</span>
-          <span style="padding-right:100px; font-weight:bold; text-transform:uppercase; letter-spacing:3px;">Delivery all over Pakistan | Buy 1 Get 1 Free</span>
+          <span style="padding-right:80px; font-weight:bold; text-transform:uppercase; letter-spacing:3px;">Delivery all over Pakistan | Buy 1 Get 1 Free</span>
+          <span style="padding-right:80px; font-weight:bold; text-transform:uppercase; letter-spacing:3px;">Delivery all over Pakistan | Buy 1 Get 1 Free</span>
         </div>
       </div>
       
-      <section class="hero">
-        <h1>Nature’s Purest <br> Secrets, Revealed.</h1>
-        <button class="shop-now" onclick="handleNavigation('product.html')">Explore Shop</button>
+      <section class="hero" style="padding:100px 20px; text-align:center;">
+        <h1 style="font-size:clamp(40px, 9vw, 90px); line-height:1.1;">Nature’s Purest <br> Secrets, Revealed.</h1>
+        <button style="background:transparent; border:1.5px solid #1d3c28; padding:20px 60px; cursor:pointer; font-weight:bold; letter-spacing:4px;" onclick="handleNavigation('product.html')">Explore Shop</button>
       </section>
       
-      <!-- REVIEWS SECTION RESTORED -->
+      <!-- REVIEWS SECTION -->
       <section class="reviews-section">
         <div class="rating-summary"><span>4.5 / 5 Rating</span><div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div></div>
         <div class="reviews-grid">
-          <div class="review-card"><span class="verified-badge"><i class="fas fa-check-circle"></i> VERIFIED BUYER</span><span class="review-name">Sarah M.</span><p>"Cleaner teeth feel!"</p></div>
-          <div class="review-card"><span class="verified-badge"><i class="fas fa-check-circle"></i> VERIFIED BUYER</span><span class="review-name">Ahmed K.</span><p>"Elegant packaging."</p></div>
-          <div class="review-card"><span class="verified-badge"><i class="fas fa-check-circle"></i> VERIFIED BUYER</span><span class="review-name">Zainab R.</span><p>"Love the BOGO offer!"</p></div>
+          <div class="review-card"><span class="verified-badge"><i class="fas fa-check-circle"></i> VERIFIED BUYER</span><b>Sarah M.</b><p>"Cleaner teeth feel!"</p></div>
+          <div class="review-card"><span class="verified-badge"><i class="fas fa-check-circle"></i> VERIFIED BUYER</span><b>Ahmed K.</b><p>"Elegant packaging."</p></div>
+          <div class="review-card"><span class="verified-badge"><i class="fas fa-check-circle"></i> VERIFIED BUYER</span><b>Zainab R.</b><p>"Highly effective for gum health. Love the BOGO offer!"</p></div>
         </div>
       </section>
     </main>
 
-    <!-- FOOTER RESTORED -->
     <footer class="footer">
       <div class="footer-content">
         <div class="footer-section"><h3>Contact Us</h3><a href="mailto:secretherbage@gmail.com">secretherbage@gmail.com</a><p>Based in Pakistan.</p></div>
@@ -217,12 +200,12 @@
       <div class="copyright" style="font-size:11px; opacity:0.4; letter-spacing:3px; text-transform:uppercase; border-top:1px solid rgba(0,0,0,0.1); padding-top:40px; width:100%; text-align:center;">&copy; 2026 Secret Herbage Pakistan. All Rights Reserved.</div>
     </footer>
 
-    <!-- AI ASSISTANT RESTORED -->
+    <!-- AI ASSISTANT -->
     <div id="ai-assistant">
       <button class="ai-btn" onclick="toggleChat()"><i class="fas fa-robot"></i></button>
       <div class="chat-window" id="chat-window">
         <div style="background:#1d3c28; color:#f3f2e8; padding:15px; font-weight:bold; text-align:center;">SECRET ASSISTANT</div>
-        <div id="chat-body" style="padding:20px; font-size:13px; color:#1d3c28;"><p>Hi! How can I help? Play the Game in "Fun" to win 50% OFF!</p></div>
+        <div id="chat-body" style="padding:20px; font-size:13px; color:#1d3c28;"><p>Hi! Need 50% OFF? Play the Game in "Fun"!</p></div>
       </div>
     </div>
 
@@ -237,17 +220,29 @@
     <a href="https://www.instagram.com/secretherbage/" class="social-float insta-float" target="_blank"><i class="fab fa-instagram"></i></a>
   </div>
 
-  <div id="swish-game-overlay"><div class="game-card"><span onclick="closeSwishGame()" style="position:absolute; top:10px; right:20px; font-size:30px; cursor:pointer;">&times;</span><h2>SWISH CHALLENGE</h2><div style="font-size:20px; font-weight:bold; margin:20px 0;">TIME: <span id="game-sec">10</span>s | SCORE: <span id="game-count">0</span></div><button id="swish-action-btn" onclick="addSwish()" disabled>Swish!</button><br><button id="start-btn-game" onclick="startSwishGame()" style="margin-top:20px; padding:10px 30px; background:#1d3c28; color:#f3f2e8; border:none; border-radius:50px; cursor:pointer; font-weight:bold;">Start Game</button></div></div>
-  <div id="hurray-popup" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); display:none; justify-content:center; align-items:center; z-index:1000005;"><div class="hurray-card" style="background:#f3f2e8; padding:50px; border-radius:25px; text-align:center;"><h1>🎉</h1><p id="hurray-msg" style="margin:20px 0; font-weight:bold;"></p><button onclick="closeHurray()" style="padding:10px 30px; background:#25d366; color:#fff; border:none; border-radius:50px; cursor:pointer;">Great!</button></div></div>
+  <!-- GAME OVERLAY -->
+  <div id="swish-game-overlay"><div class="game-card"><span onclick="closeSwishGame()" style="position:absolute; top:10px; right:20px; font-size:30px; cursor:pointer;">&times;</span><h2>SWISH CHALLENGE</h2><button id="swish-action-btn" onclick="addSwish()" disabled>Swish!</button><br><button id="start-btn-game" onclick="startSwishGame()" style="margin-top:20px; padding:10px 30px; background:#1d3c28; color:#f3f2e8; border:none; border-radius:50px; cursor:pointer; font-weight:bold;">Start Game</button></div></div>
 
   <script>
     window.addEventListener('load', () => {
-      setTimeout(() => { document.getElementById('loader').classList.add('loader-finish'); document.getElementById('website').classList.add('show-site'); document.body.style.overflowY = 'visible'; }, 9500);
+      // LOADER LOGIC
+      setTimeout(() => { 
+        document.getElementById('loader').classList.add('loader-finish'); 
+        document.getElementById('website').classList.add('show-site'); 
+        document.body.style.height = "auto";
+        document.body.style.overflowY = 'visible'; 
+      }, 9500);
+
+      // BOTTLE LOGIC
       setTimeout(() => { document.getElementById('bottle-promo-container').classList.add('animate-promo'); }, 11000);
       updateCartUI();
     });
 
-    function handleNavigation(url) { document.getElementById('loader').classList.remove('loader-finish'); setTimeout(() => { window.location.href = url; }, 1200); }
+    function handleNavigation(url) { 
+        document.getElementById('loader').classList.remove('loader-finish'); 
+        document.getElementById('website').classList.remove('show-site');
+        setTimeout(() => { window.location.href = url; }, 1200); 
+    }
 
     function updateCartUI() {
       const count = parseInt(localStorage.getItem('sh_cart_count') || 0);
@@ -263,6 +258,7 @@
       if (count > 0) { count--; localStorage.setItem('sh_cart_count', count); updateCartUI(); }
     }
 
+    // GAME LOGIC
     let sScore = 0, sTime = 10, sClock, sActive = false;
     const swishSound = document.getElementById('swish-sound');
     const victorySound = document.getElementById('victory-sound');
@@ -275,31 +271,16 @@
       sScore = 0; sTime = 10; sActive = true; document.getElementById('swish-action-btn').disabled = false;
       document.getElementById('start-btn-game').style.display = 'none';
       sClock = setInterval(() => {
-        sTime--; document.getElementById('game-sec').innerText = sTime;
-        if (sTime <= 0) {
+        sTime--; if (sTime <= 0) {
           clearInterval(sClock); sActive = false;
           document.getElementById('swish-action-btn').disabled = true;
           document.getElementById('start-btn-game').style.display = 'inline-block';
-          const msg = document.getElementById('hurray-msg');
-          if (sScore >= 80) { 
-              if(localStorage.getItem('sh_discount_used') !== 'true') {
-                  localStorage.setItem('sh_game_won', 'true'); 
-                  msg.innerHTML = "Winner! 50% OFF Unlocked!"; victorySound.play(); 
-              } else { msg.innerText = "Discount already used!"; }
-          } else { msg.innerText = "Try again!"; }
-          document.getElementById('hurray-popup').style.display = 'flex';
+          if (sScore >= 80) { localStorage.setItem('sh_game_won', 'true'); victorySound.play(); alert("Winner! 50% OFF Unlocked!"); }
+          else { alert("Score 80 to win!"); }
         }
       }, 1000);
     }
-    function addSwish() { 
-      if (sActive) { 
-        sScore++; 
-        swishSound.currentTime = 0; 
-        swishSound.play().catch(e => {}); 
-        document.getElementById('game-count').innerText = sScore;
-      } 
-    }
-    function closeHurray() { document.getElementById('hurray-popup').style.display = 'none'; }
+    function addSwish() { if (sActive) { sScore++; swishSound.currentTime = 0; swishSound.play().catch(e => {}); } }
     function toggleChat() { const win = document.getElementById('chat-window'); win.style.display = win.style.display === 'flex' ? 'none' : 'flex'; }
     window.addEventListener('storage', updateCartUI);
     @keyframes scrollSeamless { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
