@@ -84,7 +84,25 @@
   </style>
 </head>
 <body>
- <!-- PRODUCT SECTION -->
+
+  <!-- LOADER -->
+  <div id="loader"><div class="loader-logo">Secret Herbage</div></div>
+
+  <div id="website-wrapper">
+    <!-- LOCKED LEFT BANNER -->
+    <div class="vertical-promo"><div class="vertical-text-wrap"><span>Delivery all over Pakistan | Buy 1 Get 1 Free</span><span>Delivery all over Pakistan | Buy 1 Get 1 Free</span></div></div>
+
+    <!-- HEADER -->
+    <header class="header">
+      <div class="tagline">Nature's Secret Smile for You</div>
+      <div class="brand-title-center">SECRET HERBAGE</div>
+      <div class="nav-bar-privacy">
+        <a href="index.html" class="home-btn">HOME</a>
+        <div id="cart-display" style="font-weight:bold;">🛒 (0)</div>
+      </div>
+    </header>
+
+    <!-- PRODUCT SECTION -->
     <div class="product-container">
       <div class="product-slider" id="main-slider">
         <div class="slider-track">
@@ -94,11 +112,27 @@
       </div>
       <div class="product-info" style="flex: 1.5;">
         <h1>Pulling Oil</h1>
-      <button class="btn" id="add-btn" onclick="addToCart()">Add to Cart</button>
-      <a href="checkout.html" class="btn" id="check-btn" style="display:none; background:#2ecc71;">Proceed to Checkout</a>
-    </div>
-  </div>
-   <div style="margin-top: 30px;">
+        
+        <!-- Discount Note -->
+        <div id="discount-note">🎉 50% discount has been applied since you have clicked on swish more than 80 times!</div>
+
+        <div style="display: flex; align-items: center; gap: 15px; margin: 20px 0;">
+          <span style="font-size: 22px; text-decoration: line-through; opacity: 0.5;">Rs. 2,700.00</span>
+          <span id="current-price" style="font-size: 32px; font-weight: bold;">Rs. 2,400.00</span>
+          <span id="discount-badge" style="background: #1d3c28; color: #f3f2e8; padding: 5px 12px; font-size: 12px; font-weight: bold;">Buy 1 Get 1 Free</span>
+        </div>
+
+        <div class="cart-section">
+          <a href="javascript:void(0)" class="checkout-btn" id="checkout-link" onclick="handleCheckout()">Proceed to Checkout</a>
+          <button class="add-btn" id="add-to-cart-btn">Add to Cart</button>
+          <div class="qty-selector" id="qty-selector">
+            <button class="qty-btn" onclick="updateQty(-1)">-</button>
+            <span id="qty-display" style="font-weight:bold; font-size:18px;">1</span>
+            <button class="qty-btn" onclick="updateQty(1)">+</button>
+          </div>
+        </div>
+
+        <div style="margin-top: 30px;">
           <h3 style="text-transform: uppercase; letter-spacing: 2px; border-bottom: 1px solid; display: inline-block; margin-bottom: 15px;">Benefits</h3>
           <ul style="padding-left: 20px; line-height: 2;">
             <li>Reduces bad breath & plaque</li>
@@ -108,7 +142,7 @@
           </ul>
         </div>
       </div>
-    </div>
+    </div>    
        <!-- FOOTER (RESTORED) -->
     <footer class="footer">
       <div class="footer-content">
