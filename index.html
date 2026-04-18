@@ -324,7 +324,7 @@
     function addSwish() { if(sActive) { sScore++; document.getElementById('game-count').innerText = sScore; } }
     function showResult() {
       const msg = document.getElementById('hurray-msg');
-      if(sScore >= 80){ msg.innerText = "🎉 AMAZING! Use code SECRET50 for 50% OFF."; }
+      if(sScore >= 10){ msg.innerText = "🎉 AMAZING! Use code SECRET50 for 50% OFF."; }
       else { msg.innerText = "Try again! You need 80 swishes."; }
       document.getElementById('hurray-popup').style.display = 'flex';
       document.getElementById('hurray-card').classList.add('show');
