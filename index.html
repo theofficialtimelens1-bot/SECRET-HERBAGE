@@ -98,43 +98,11 @@
     .whatsapp-float { top: 600px; background-color: #25d366; }
     .insta-float { top: 680px; background: linear-gradient(45deg, #f09433, #bc1888); }
 
-    /* --- AI ASSISTANT FIXED TO RIGHT CENTER --- */
-    #HELPER { 
-      position: fixed; 
-      top: 50%; 
-      right: 30px; 
-      transform: translateY(-50%); 
-      z-index: 100000; 
-    }
-    .ai-btn { 
-      background: #1d3c28; 
-      color: #f3f2e8; 
-      width: 60px; 
-      height: 60px; 
-      border-radius: 50%; 
-      border: none; 
-      font-size: 25px; 
-      cursor: pointer; 
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2); 
-      transition: 0.3s; 
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+    /* AI ASSISTANT POSITION */
+    #HELPER { position: fixed; top: 50%; right: 30px; transform: translateY(-50%); z-index: 100000; }
+    .ai-btn { background: #1d3c28; color: #f3f2e8; width: 60px; height: 60px; border-radius: 50%; border: none; font-size: 25px; cursor: pointer; box-shadow: 0 10px 30px rgba(0,0,0,0.2); transition: 0.3s; display: flex; align-items: center; justify-content: center; }
     .ai-btn:hover { transform: scale(1.1); }
-    .chat-window { 
-      position: absolute; 
-      bottom: 70px; /* Opens above the button */
-      right: 0; 
-      width: 300px; 
-      background: #f3f2e8; 
-      border: 1px solid #1d3c28; 
-      border-radius: 15px; 
-      box-shadow: 0 10px 40px rgba(0,0,0,0.2); 
-      display: none; 
-      flex-direction: column; 
-      overflow: hidden;
-    }
+    .chat-window { position: absolute; bottom: 70px; right: 0; width: 300px; background: #f3f2e8; border: 1px solid #1d3c28; border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); display: none; flex-direction: column; overflow: hidden; }
     .ai-option-btn { background: #ffffff; color: #1d3c28; border: 1px solid #1d3c28; width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 5px; cursor: pointer; font-weight: bold; text-align: left; transition: 0.3s; }
     .ai-option-btn:hover { background: #1d3c28; color: #f3f2e8; }
     .chat-msg { margin-bottom: 15px; padding: 10px; background: rgba(29, 60, 40, 0.05); border-radius: 8px; }
@@ -159,26 +127,27 @@
 </head>
 <body>
 
-  <!-- LOADER -->
+  <!-- CLICK SOUND AUDIO -->
+  <audio id="click-sound" src="https://www.soundjay.com/buttons/button-16.mp3" preload="auto"></audio>
+
   <div id="loader">
     <div class="smoke-container"><div class="smoke-particle"></div><div class="smoke-particle"></div><div class="smoke-particle"></div><div class="smoke-particle"></div></div>
     <div class="writing-container"><svg viewBox="0 0 1000 200"><text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle">SECRET HERBAGE</text></svg></div>
   </div>
 
   <div id="website">
-     <header class="header">
+    <header class="header">
       <div class="tagline">Nature's Secret Smile for You</div>
       <nav class="nav-bar">
-        <a href="Untitled-2.html"><img src="logo.png" alt="Logo" class="brand-logo"></a>
+        <a href="#"><img src="logo.png" alt="Logo" class="brand-logo"></a>
         <div class="brand-title-center">SECRET HERBAGE</div>
         <div class="nav-right">
-          <div class="dropdown"><button class="dropbtn">Oral Care ▾</button><div class="dropdown-content"><a href="javascript:void(0)" onclick="handleNavigation('product.html')">PULLING OIL</a><a href="#">CHARCOAL TOOTHPASTE (SOON)</a></div></div>
+          <div class="dropdown"><button class="dropbtn">Oral Care ▾</button><div class="dropdown-content"><a href="#">PULLING OIL</a><a href="#">CHARCOAL TOOTHPASTE (SOON)</a></div></div>
           <div class="dropdown"><button class="dropbtn">Fun ▾</button><div class="dropdown-content"><a href="javascript:void(0)" onclick="openSwishGame()">MAINTAIN YOUR ORAL HYGIENE</a></div></div>
           <div class="cart-btn" id="cart-display" style="cursor:pointer; font-weight:bold;">🛒 (0)</div>
         </div>
       </nav>
     </header>
-
 
     <main>
       <section class="hero reveal">
@@ -190,7 +159,7 @@
         <div class="rating-summary"><span>4.5 / 5</span><div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div></div>
         <div class="reviews-grid">
           <div class="review-card"><span class="verified-badge"><i class="fas fa-check-circle"></i> VERIFIED BUYER</span><span class="review-name">Sarah M.</span><p>"The pulling oil is a game changer. Teeth feel cleaner!"</p></div>
-          <div class="review-card"><span class="verified-badge"><i class="fas fa-check-circle"></i> VERIFIED BUYER</span><span class="review-name">Ahmed K.</span><p>"Best natural oral care in Pakistan. Elegant packaging."</p></div>
+          <div class="review-card"><span class="verified-badge"><i class="fas fa-check-circle"></i> VERIFIED BUYER</span><span class="review-name">Ahmed K.</span><p>"Best natural oral care in Pakistan."</p></div>
           <div class="review-card"><span class="verified-badge"><i class="fas fa-check-circle"></i> VERIFIED BUYER</span><span class="review-name">Zainab R.</span><p>"Highly effective for gum health. Love the BOGO offer!"</p></div>
         </div>
       </section>
@@ -198,11 +167,11 @@
 
     <footer class="footer">
       <div class="footer-content">
-        <div class="footer-section"><h3>Contact Us</h3><a href="mailto:secretherbage@gmail.com">secretherbage@gmail.com</a><a href="https://www.google.com/maps/place/Pakistan" target="_blank">Based in Pakistan.</a></div>
-        <div class="footer-section"><h3>Information</h3><a onclick="handleNavigation('story.html')">Our Story</a><a onclick="handleNavigation('privacy.html')">Privacy Policy</a></div>
-        <div class="footer-section"><h3>Community</h3><a href="https://www.instagram.com/secretherbage" target="_blank">Instagram</a><a href="https://www.facebook.com/secretherbage" target="_blank">Facebook</a></div>
+        <div class="footer-section"><h3>Contact Us</h3><a href="mailto:secretherbage@gmail.com">secretherbage@gmail.com</a></div>
+        <div class="footer-section"><h3>Information</h3><a>Our Story</a><a>Privacy Policy</a></div>
+        <div class="footer-section"><h3>Community</h3><a href="https://www.instagram.com/secretherbage" target="_blank">Instagram</a></div>
       </div>
-      <div class="copyright">&copy; 2026 Secret Herbage Pakistan. All Rights Reserved.</div>
+      <div class="copyright">&copy; 2026 Secret Herbage Pakistan.</div>
     </footer>
 
     <!-- AI HELPER (Right Center) -->
@@ -218,7 +187,7 @@
       </div>
     </div>
 
-    <!-- SOCIALS (Left side) -->
+    <!-- SOCIALS -->
     <a href="https://wa.me/923330341982" class="social-float whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
     <a href="https://www.instagram.com/secretherbage/" class="social-float insta-float" target="_blank"><i class="fab fa-instagram"></i></a>
 
@@ -230,8 +199,27 @@
   </div>
   
   <!-- GAME OVERLAYS -->
-  <div id="swish-game-overlay"><div class="game-card"><span class="close-game" onclick="closeSwishGame()" style="position:absolute; right:20px; top:10px; cursor:pointer; font-size:24px;">&times;</span><h2>SWISH CHALLENGE</h2><div style="display:flex; justify-content:space-around; margin:20px 0; font-weight:bold;"><div>TIME: <span id="game-sec">10</span>s</div><div>SWISHES: <span id="game-count">0</span></div></div><button id="swish-action-btn" onclick="addSwish()" disabled>Swish!</button><br><button onclick="startSwishGame()" style="margin-top:20px; padding:10px 30px; background:#1d3c28; color:#f3f2e8; border:none; border-radius:50px; cursor:pointer;">Start Game</button></div></div>
-  <div id="hurray-popup"><div class="hurray-card" id="hurray-card"><h1>🎉</h1><p id="hurray-msg" style="font-weight:bold; margin:20px 0;">Hurray! Excellent hygiene!</p><button onclick="closeHurray()" style="padding:10px 30px; background:#25d366; color:#fff; border:none; border-radius:50px; cursor:pointer;">Great!</button></div></div>
+  <div id="swish-game-overlay">
+    <div class="game-card">
+        <span class="close-game" onclick="closeSwishGame()" style="position:absolute; right:20px; top:10px; cursor:pointer; font-size:24px;">&times;</span>
+        <h2>SWISH CHALLENGE</h2>
+        <div style="display:flex; justify-content:space-around; margin:20px 0; font-weight:bold;">
+            <div>TIME: <span id="game-sec">10</span>s</div>
+            <div>SWISHES: <span id="game-count">0</span></div>
+        </div>
+        <button id="swish-action-btn" onclick="addSwish()" disabled>Swish!</button>
+        <br>
+        <button onclick="startSwishGame()" style="margin-top:20px; padding:10px 30px; background:#1d3c28; color:#f3f2e8; border:none; border-radius:50px; cursor:pointer;">Start Game</button>
+    </div>
+  </div>
+
+  <div id="hurray-popup">
+    <div class="hurray-card" id="hurray-card">
+        <h1 id="hurray-emoji">🎉</h1>
+        <p id="hurray-msg" style="font-weight:bold; margin:20px 0; line-height: 1.6;"></p>
+        <button id="hurray-close-btn" onclick="closeHurray()" style="padding:10px 30px; background:#25d366; color:#fff; border:none; border-radius:50px; cursor:pointer;">OK</button>
+    </div>
+  </div>
 
   <script>
     // LOADER
@@ -245,39 +233,79 @@
     function showOption(type) {
       const body = document.getElementById('chat-body');
       if(type === 'policy') {
-        body.innerHTML = `<div class="chat-msg"><b>Refund & Policy:</b> Secret Herbage is committed to providing safe service. Damaged product? Contact us within 24-48 hours via WhatsApp for a replacement.</div><button style="background:none; border:none; text-decoration:underline; cursor:pointer;" onclick="resetChat()">Back</button>`;
+        body.innerHTML = `<div class="chat-msg"><b>Refund & Policy:</b> Damaged product? Contact us within 24-48 hours.</div><button style="background:none; border:none; text-decoration:underline; cursor:pointer;" onclick="resetChat()">Back</button>`;
       } else if(type === 'discount') {
-        body.innerHTML = `<div class="chat-msg"><b>Unlock 50% OFF:</b> Go to "Fun" menu, start Swish Challenge. Click 80 times in 10s to win!</div><button style="background:none; border:none; text-decoration:underline; cursor:pointer;" onclick="resetChat()">Back</button>`;
+        body.innerHTML = `<div class="chat-msg"><b>Unlock 50% OFF:</b> Go to "Fun" menu, click 80 times in 10s to win!</div><button style="background:none; border:none; text-decoration:underline; cursor:pointer;" onclick="resetChat()">Back</button>`;
       }
     }
     function resetChat() {
       document.getElementById('chat-body').innerHTML = `<p class="chat-msg">Hello! How can I help you today?</p><button class="ai-option-btn" onclick="showOption('policy')">1. PRIVACY/POLICY</button><button class="ai-option-btn" onclick="showOption('discount')">2. 50% OFF GUIDE</button>`;
     }
 
-    function handleNavigation(url) { document.getElementById('loader').classList.remove('loader-finish'); setTimeout(() => { window.location.href = url; }, 1200); }
-
     // GAME LOGIC
     let sScore = 0, sTime = 10, sClock, sActive = false;
+    const clickSound = document.getElementById('click-sound');
+
     function openSwishGame() { document.getElementById('swish-game-overlay').style.display = 'flex'; resetSwish(); }
     function closeSwishGame() { document.getElementById('swish-game-overlay').style.display = 'none'; clearInterval(sClock); sActive = false; }
+
     function startSwishGame() {
-      sScore = 0; sTime = 10; sActive = true; document.getElementById('swish-action-btn').disabled = false;
+      sScore = 0; sTime = 10; sActive = true; 
+      document.getElementById('swish-action-btn').disabled = false;
+      document.getElementById('game-count').innerText = 0;
+      
       sClock = setInterval(() => {
-        sTime--; document.getElementById('game-sec').innerText = sTime;
+        sTime--; 
+        document.getElementById('game-sec').innerText = sTime;
         if (sTime <= 0) {
-          clearInterval(sClock); sActive = false; document.getElementById('swish-action-btn').disabled = true;
+          clearInterval(sClock); 
+          sActive = false; 
+          document.getElementById('swish-action-btn').disabled = true;
+          
           const msg = document.getElementById('hurray-msg');
-          if (sScore >= 80) { localStorage.setItem('sh_discount_50', 'true'); msg.innerHTML = "Hurray! Excellent hygiene & 50% OFF UNLOCKED!"; }
-          else { msg.innerText = "Hurray! You have maintained your oral hygiene"; }
+          const emoji = document.getElementById('hurray-emoji');
+          const btn = document.getElementById('hurray-close-btn');
+
+          if (sScore >= 80) {
+            localStorage.setItem('sh_discount_50', 'true');
+            emoji.innerText = "🎉";
+            msg.innerHTML = "You Have Unlocked 50% OFF. It Will Be Applied Automatically";
+            btn.innerText = "Awesome!";
+          } else {
+            emoji.innerText = "❌";
+            msg.innerText = "Try Again! You need 80 swishes to unlock the discount.";
+            btn.innerText = "Try Again";
+          }
+          
           document.getElementById('hurray-popup').style.display = 'flex';
           setTimeout(() => document.getElementById('hurray-card').classList.add('show'), 10);
         }
       }, 1000);
     }
-    function addSwish() { if (sActive) { sScore++; document.getElementById('game-count').innerText = sScore; } }
-    function closeHurray() { document.getElementById('hurray-card').classList.remove('show'); setTimeout(() => { document.getElementById('hurray-popup').style.display = 'none'; resetSwish(); }, 500); }
-    function resetSwish() { sScore = 0; sTime = 10; document.getElementById('game-count').innerText = 0; document.getElementById('game-sec').innerText = 10; }
-    document.getElementById('cart-display').innerText = `🛒 (${localStorage.getItem('sh_cart_count') || 0})`;
+
+    function addSwish() { 
+      if (sActive) { 
+        sScore++; 
+        document.getElementById('game-count').innerText = sScore;
+        // Play click sound
+        clickSound.currentTime = 0;
+        clickSound.play();
+      } 
+    }
+
+    function closeHurray() { 
+      document.getElementById('hurray-card').classList.remove('show'); 
+      setTimeout(() => { 
+        document.getElementById('hurray-popup').style.display = 'none'; 
+        resetSwish(); 
+      }, 500); 
+    }
+
+    function resetSwish() { 
+      sScore = 0; sTime = 10; 
+      document.getElementById('game-count').innerText = 0; 
+      document.getElementById('game-sec').innerText = 10; 
+    }
   </script>
 </body>
 </html>
