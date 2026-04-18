@@ -1,5 +1,4 @@
-]<!DOCTYPE html>
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -17,319 +16,388 @@
     }
     body {
       color: #1d3c28; font-family: 'Playfair Display', serif, 'Times New Roman';
-      margin: 0; min-height: 100vh; overflow-y: hidden; /* Locked until load */
+      margin: 0; height: 100vh; overflow-y: hidden;
     }
 
+    /* --- PREMIUM SEQUENTIAL LOADER --- */
+    #loader {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+      background: #f3f2e8; display: flex; justify-content: center; align-items: center; 
+      z-index: 9999999; overflow: hidden;
+    }
+    #website { 
+      opacity: 0; filter: blur(30px); transition: opacity 1s ease, filter 1.5s ease; 
+      position: relative; width: 100%; overflow-x: hidden;
+    }
+    .show-site { opacity: 1 !important; filter: blur(0) !important; }
 
-code
-Code
-download
-content_copy
-expand_less
-/* --- LOADER STYLES --- */
-#loader {
-position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-background: #f3f2e8; display: flex; justify-content: center; align-items: center;
-z-index: 9999999; overflow: hidden; opacity: 1; transition: 0.8s ease;
-}
-#website {
-opacity: 0; filter: blur(30px); transition: opacity 1s ease, filter 1.5s ease;
-position: relative; width: 100%; overflow-x: hidden; visibility: hidden;
-}
-.show-site { opacity: 1 !important; filter: blur(0) !important; visibility: visible !important; }
-.loader-finish { opacity: 0 !important; visibility: hidden !important; pointer-events: none; }
+    /* SMOKE EFFECT */
+    .smoke-container { position: absolute; width: 100%; height: 100%; top: 0; left: 0; overflow: hidden; pointer-events: none; z-index: 10; }
+    .smoke-particle { 
+      position: absolute; bottom: -200px; 
+      width: 700px; height: 700px; 
+      background: radial-gradient(circle, rgba(29, 60, 40, 0.6) 0%, transparent 70%); 
+      filter: blur(80px); border-radius: 50%; opacity: 0; 
+      animation: herbalSmokeRise 6s ease-out forwards; 
+    }
+    .smoke-particle:nth-child(1) { left: -10%; }
+    .smoke-particle:nth-child(2) { left: 30%; width: 900px; animation-delay: 0.5s; }
+    .smoke-particle:nth-child(3) { left: 60%; animation-delay: 0.2s; }
+    .smoke-particle:nth-child(4) { left: 85%; width: 800px; animation-delay: 0.8s; }
+    @keyframes herbalSmokeRise { 0% { transform: translateY(0) scale(1); opacity: 0; } 20% { opacity: 1; } 80% { opacity: 0.8; } 100% { transform: translateY(-130vh) scale(3); opacity: 0; } }
 
-/* SMOKE EFFECT */
-.smoke-container { position: absolute; width: 100%; height: 100%; top: 0; left: 0; overflow: hidden; pointer-events: none; z-index: 10; }
-.smoke-particle {
-position: absolute; bottom: -200px;
-width: 700px; height: 700px;
-background: radial-gradient(circle, rgba(29, 60, 40, 0.6) 0%, transparent 70%);
-filter: blur(80px); border-radius: 50%; opacity: 0;
-animation: herbalSmokeRise 6s ease-out forwards;
-}
-.smoke-particle:nth-child(1) { left: -10%; }
-.smoke-particle:nth-child(2) { left: 30%; width: 900px; animation-delay: 0.5s; }
-.smoke-particle:nth-child(3) { left: 60%; animation-delay: 0.2s; }
-.smoke-particle:nth-child(4) { left: 85%; width: 800px; animation-delay: 0.8s; }
-@keyframes herbalSmokeRise { 0% { transform: translateY(0) scale(1); opacity: 0; } 20% { opacity: 1; } 80% { opacity: 0.8; } 100% { transform: translateY(-130vh) scale(3); opacity: 0; } }
+    /* WRITING & ZOOM LOADER */
+    .writing-container { width: 90%; max-width: 900px; z-index: 5; opacity: 0; display: flex; justify-content: center; align-items: center; animation: fadeInReveal 0.8s ease forwards 3s; }
+    .writing-container svg { width: 100%; height: auto; overflow: visible; }
+    .writing-container text { font-family: 'Playfair Display', serif; font-size: 85px; font-weight: 900; font-style: italic; fill: none; stroke: #1d3c28; stroke-width: 1.5; stroke-dasharray: 1200; stroke-dashoffset: 1200; text-anchor: middle; filter: drop-shadow(0 0 10px rgba(29, 60, 40, 0.4)); transform-origin: center; animation: writeText 2.5s ease-out forwards 3.5s, fillText 1s ease forwards 6s, zoomToFace 1.5s cubic-bezier(0.7, 0, 0.3, 1) forwards 8s; }
+    @keyframes writeText { 0% { stroke-dashoffset: 1200; } 100% { stroke-dashoffset: 0; } }
+    @keyframes fillText { 0% { fill: rgba(29, 60, 40, 0); } 100% { fill: rgba(29, 60, 40, 1); } }
+    @keyframes fadeInReveal { to { opacity: 1; } }
+    @keyframes zoomToFace { 0% { transform: scale(1); opacity: 1; filter: blur(0); } 100% { transform: scale(12); opacity: 0; filter: blur(10px); } }
+    .loader-finish { opacity: 0 !important; visibility: hidden !important; transition: 0.8s ease; }
 
-/* WRITING & ZOOM LOADER */
-.writing-container { width: 90%; max-width: 900px; z-index: 15; opacity: 0; display: flex; justify-content: center; align-items: center; animation: fadeInReveal 0.8s ease forwards 1s; }
-.writing-container svg { width: 100%; height: auto; overflow: visible; }
-.writing-container text { font-family: 'Playfair Display', serif; font-size: 85px; font-weight: 900; font-style: italic; fill: none; stroke: #1d3c28; stroke-width: 1.5; stroke-dasharray: 1200; stroke-dashoffset: 1200; text-anchor: middle; filter: drop-shadow(0 0 10px rgba(29, 60, 40, 0.4)); transform-origin: center; animation: writeText 2.5s ease-out forwards 1.5s, fillText 1s ease forwards 4s, zoomToFace 1.5s cubic-bezier(0.7, 0, 0.3, 1) forwards 5.5s; }
-@keyframes writeText { 0% { stroke-dashoffset: 1200; } 100% { stroke-dashoffset: 0; } }
-@keyframes fillText { 0% { fill: rgba(29, 60, 40, 0); } 100% { fill: rgba(29, 60, 40, 1); } }
-@keyframes fadeInReveal { to { opacity: 1; } }
-@keyframes zoomToFace { 0% { transform: scale(1); opacity: 1; filter: blur(0); } 100% { transform: scale(12); opacity: 0; filter: blur(10px); } }
+    /* SEAMLESS BANNER */
+    .promo-banner { width: 100%; background-color: #1d3c28; color: #f3f2e8; padding: 12px 0; overflow: hidden; display: flex; white-space: nowrap; }
+    .banner-wrap { display: flex; animation: scrollSeamless 20s linear infinite; width: max-content; }
+    .banner-wrap span { font-size: 13px; font-weight: bold; text-transform: uppercase; letter-spacing: 3px; padding-right: 80px; display: inline-block; }
+    @keyframes scrollSeamless { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-/* LAYOUT COMPONENTS */
-.promo-banner { width: 100%; background-color: #1d3c28; color: #f3f2e8; padding: 12px 0; overflow: hidden; display: flex; white-space: nowrap; }
-.banner-wrap { display: flex; animation: scrollSeamless 20s linear infinite; width: max-content; }
-.banner-wrap span { font-size: 13px; font-weight: bold; text-transform: uppercase; letter-spacing: 3px; padding-right: 80px; }
-@keyframes scrollSeamless { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    /* HEADER & CENTER TITLE */
+    .header { width: 100%; padding-top: 15px; position: relative; z-index: 1000; }
+    .tagline { display: block; text-align: center; font-size: 11px; text-transform: uppercase; letter-spacing: 6px; font-weight: 700; margin-bottom: 10px; opacity: 0.8; }
+    .nav-bar { display: flex; justify-content: space-between; align-items: center; padding: 10px 6%; border-bottom: 1px solid rgba(29, 60, 40, 0.1); position: relative; }
+    .brand-logo { height: 110px; width: auto; cursor: pointer; }
+    .brand-title-center { position: absolute; left: 50%; transform: translateX(-50%); font-size: 28px; font-weight: 900; text-transform: uppercase; letter-spacing: 12px; color: #1d3c28; pointer-events: none; white-space: nowrap; }
+    .nav-right { display: flex; align-items: center; gap: 40px; }
+    
+    /* DROPDOWN MENU */
+    .dropdown { position: relative; }
+    .dropbtn { background: none; border: none; color: #1d3c28; font-size: 14px; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; }
+    .dropdown-content { visibility: hidden; opacity: 0; position: absolute; background-color: #ffffff; min-width: 220px; right: 0; border-radius: 4px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); transform: translateY(15px); transition: 0.3s ease; }
+    .dropdown:hover .dropdown-content { visibility: visible; opacity: 1; transform: translateY(10px); }
+    .dropdown-content a { color: #1d3c28; padding: 15px 20px; text-decoration: none; display: block; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; }
+    .dropdown-content a:hover { background-color: #1d3c28; color: #f3f2e8; }
 
-.header { width: 100%; padding: 20px 0; border-bottom: 1px solid rgba(29, 60, 40, 0.1); }
-.tagline { display: block; text-align: center; font-size: 11px; text-transform: uppercase; letter-spacing: 6px; font-weight: 700; margin-bottom: 15px; opacity: 0.8; }
-.nav-bar { display: flex; justify-content: space-between; align-items: center; padding: 0 6%; position: relative; }
-.brand-logo { height: 80px; width: auto; }
-.brand-title-center { position: absolute; left: 50%; transform: translateX(-50%); font-size: 24px; font-weight: 900; letter-spacing: 8px; text-transform: uppercase; }
-.nav-right { display: flex; align-items: center; gap: 25px; }
+    .hero { padding: 100px 20px 60px; text-align: center; }
+    .hero h1 { font-size: clamp(40px, 9vw, 90px); margin-bottom: 25px; line-height: 1.1; }
+    .shop-now { background: transparent; border: 1.5px solid #1d3c28; padding: 20px 60px; cursor: pointer; font-weight: bold; letter-spacing: 4px; transition: 0.3s; }
+    .shop-now:hover { background: #1d3c28; color: #f3f2e8; }
 
-/* DROPDOWN */
-.dropdown { position: relative; display: inline-block; }
-.dropbtn { background: none; border: none; color: #1d3c28; font-weight: bold; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; }
-.dropdown-content { display: none; position: absolute; background: white; min-width: 220px; box-shadow: 0 8px 16px rgba(0,0,0,0.1); z-index: 100; right: 0; }
-.dropdown:hover .dropdown-content { display: block; }
-.dropdown-content a { color: #1d3c28; padding: 12px 16px; text-decoration: none; display: block; font-size: 12px; font-weight: bold; }
-.dropdown-content a:hover { background: #1d3c28; color: white; }
+    /* REVIEWS SECTION */
+    .reviews-section { padding: 80px 6%; text-align: center; border-top: 1px solid rgba(29, 60, 40, 0.05); }
+    .rating-summary { display: flex; justify-content: center; align-items: center; gap: 10px; margin-bottom: 40px; }
+    .stars { color: #f1c40f; font-size: 18px; }
+    .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+    .review-card { background: rgba(29, 60, 40, 0.03); padding: 30px; border-radius: 15px; text-align: left; border: 1px solid rgba(29, 60, 40, 0.05); transition: 0.3s; }
+    .review-card:hover { transform: translateY(-10px); background: #fff; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+    .verified-badge { color: #2ecc71; font-size: 11px; font-weight: bold; text-transform: uppercase; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; letter-spacing: 1px; }
+    .review-name { font-weight: 900; margin-bottom: 8px; display: block; font-size: 16px; }
 
-.hero { padding: 120px 20px; text-align: center; }
-.hero h1 { font-size: clamp(40px, 8vw, 80px); line-height: 1.1; margin-bottom: 30px; }
-.shop-now { padding: 18px 50px; background: transparent; border: 1.5px solid #1d3c28; font-weight: bold; cursor: pointer; text-transform: uppercase; letter-spacing: 2px; transition: 0.3s; }
-.shop-now:hover { background: #1d3c28; color: white; }
+    /* FOOTER */
+    .footer { background-color: #f3f2e8; padding: 100px 6% 40px 6%; border-top: 1px solid rgba(29, 60, 40, 0.1); display: flex; flex-direction: column; align-items: center; }
+    .footer-content { width: 100%; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 50px; margin-bottom: 60px; }
+    .footer-section h3 { font-size: 15px; text-transform: uppercase; letter-spacing: 4px; margin-bottom: 25px; font-weight: bold; }
+    .footer-section a { font-size: 14px; color: #1d3c28; text-decoration: none; display: block; margin-bottom: 18px; opacity: 0.7; transition: 0.4s; cursor: pointer; width: fit-content; }
+    .footer-section a:hover { opacity: 1; transform: translateX(12px); font-weight: bold; }
+    .copyright { font-size: 11px; opacity: 0.4; text-transform: uppercase; letter-spacing: 3px; border-top: 1px solid rgba(29, 60, 40, 0.1); padding-top: 40px; width: 100%; text-align: center; }
 
-/* REVIEWS */
-.reviews-section { padding: 60px 6%; background: rgba(29,60,40,0.02); }
-.rating-summary { display: flex; justify-content: center; align-items: center; gap: 10px; margin-bottom: 30px; }
-.stars { color: #f1c40f; }
-.reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-.review-card { background: white; padding: 30px; border-radius: 10px; border: 1px solid rgba(0,0,0,0.05); }
-.verified-badge { color: #2ecc71; font-size: 10px; display: block; margin-bottom: 5px; font-weight: bold; }
+    /* SOCIALS (LEFT) */
+    .social-float { position: absolute; left: 30px; z-index: 99999; width: 60px; height: 60px; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; box-shadow: 2px 2px 15px rgba(0,0,0,0.3); transition: 0.3s; }
+    .whatsapp-float { top: 600px; background-color: #25d366; }
+    .insta-float { top: 680px; background: linear-gradient(45deg, #f09433, #bc1888); }
 
-/* FOOTER */
-.footer { padding: 80px 6% 40px; border-top: 1px solid rgba(0,0,0,0.1); display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; }
-.footer-section h3 { margin-bottom: 20px; font-size: 14px; letter-spacing: 2px; }
-.footer-section a { display: block; text-decoration: none; color: #1d3c28; opacity: 0.7; margin-bottom: 10px; font-size: 14px; transition: 0.3s; cursor: pointer; }
-.footer-section a:hover { opacity: 1; padding-left: 5px; }
+    /* --- AI ASSISTANT (RIGHT SIDE - IN LINE WITH SOCIALS) --- */
+    #ai-assistant { position: absolute; top: 600px; right: 30px; z-index: 100000; }
+    .ai-btn { background: #1d3c28; color: #f3f2e8; width: 60px; height: 60px; border-radius: 50%; border: none; font-size: 25px; cursor: pointer; box-shadow: 0 10px 30px rgba(0,0,0,0.2); transition: 0.3s; }
+    .ai-btn:hover { transform: scale(1.1); }
+    .chat-window { 
+      position: absolute; bottom: 80px; right: 0; width: 300px; 
+      background: #f3f2e8; border: 1px solid #1d3c28; border-radius: 15px; 
+      box-shadow: 0 10px 40px rgba(0,0,0,0.2); display: none; overflow: hidden; 
+      flex-direction: column;
+    }
+    .chat-header { background: #1d3c28; color: #f3f2e8; padding: 15px; font-weight: bold; font-size: 14px; text-align: center; }
+    .chat-body { padding: 20px; font-size: 13px; line-height: 1.5; color: #1d3c28; max-height: 350px; overflow-y: auto; }
+    .ai-option-btn { background: #ffffff; color: #1d3c28; border: 1px solid #1d3c28; width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 5px; cursor: pointer; font-weight: bold; text-align: left; transition: 0.3s; }
+    .ai-option-btn:hover { background: #1d3c28; color: #f3f2e8; }
+    .chat-msg { margin-bottom: 15px; padding: 10px; background: rgba(29, 60, 40, 0.05); border-radius: 8px; }
+    .back-btn-ai { background: none; border: none; color: #1d3c28; text-decoration: underline; cursor: pointer; font-size: 12px; margin-top: 10px; }
 
-/* FLOATING ELEMENTS */
-.social-float { position: fixed; left: 30px; width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; z-index: 999; box-shadow: 0 4px 15px rgba(0,0,0,0.2); text-decoration: none; }
-.whatsapp-float { bottom: 100px; background: #25d366; }
-.insta-float { bottom: 30px; background: linear-gradient(45deg, #f09433, #bc1888); }
+    /* BOTTLE PROMO */
+    #bottle-promo-container { position: absolute; top: 480px; right: -800px; display: flex; flex-direction: column; align-items: center; z-index: 9998; cursor: pointer; visibility: hidden; }
+    .promo-text-bubble { background: #1d3c28; color: #f3f2e8; padding: 10px 18px; border-radius: 12px; font-size: 13px; font-weight: bold; margin-bottom: -30px; z-index: 2; box-shadow: 0 10px 20px rgba(0,0,0,0.2); white-space: nowrap; opacity: 0; }
+    .promo-bottle-img { width: 320px; height: auto; filter: drop-shadow(0 20px 40px rgba(0,0,0,0.2)); }
+    @keyframes bottleFullCycle { 0% { right: -800px; visibility: visible; opacity: 0; } 15% { right: 30px; opacity: 1; } 85% { right: 30px; opacity: 1; } 100% { right: -1000px; opacity: 0; visibility: hidden; } }
+    @keyframes textFadeCycle { 0%, 15% { opacity: 0; transform: translateY(20px); } 20%, 80% { opacity: 1; transform: translateY(0); } 90%, 100% { opacity: 0; transform: translateY(20px); } }
+    .animate-promo { animation: bottleFullCycle 7s cubic-bezier(0.165, 0.84, 0.44, 1) forwards; }
+    .animate-promo .promo-text-bubble { animation: textFadeCycle 7s ease forwards; }
 
-#ai-assistant { position: fixed; bottom: 30px; right: 30px; z-index: 1000; }
-.ai-btn { width: 60px; height: 60px; border-radius: 50%; background: #1d3c28; color: white; border: none; cursor: pointer; font-size: 24px; }
-.chat-window { position: absolute; bottom: 80px; right: 0; width: 300px; background: white; border: 1px solid #1d3c28; border-radius: 15px; display: none; flex-direction: column; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+    /* GAME OVERLAYS */
+    #swish-game-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(29, 60, 40, 0.98); display: none; justify-content: center; align-items: center; z-index: 1000001; }
+    .game-card { background: #f3f2e8; color: #1d3c28; padding: 40px; border-radius: 20px; width: 90%; max-width: 450px; text-align: center; position: relative; box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
+    #swish-action-btn { width: 140px; height: 140px; border-radius: 50%; border: 6px solid #1d3c28; background: transparent; color: #1d3c28; font-size: 22px; font-weight: 900; cursor: pointer; transition: 0.1s; }
+    #hurray-popup { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: none; justify-content: center; align-items: center; z-index: 1000005; }
+    .hurray-card { background: #f3f2e8; color: #1d3c28; padding: 50px; border-radius: 25px; text-align: center; max-width: 450px; transform: scale(0.5); transition: 0.5s; }
+    .hurray-card.show { transform: scale(1); }
+  </style>
+</head>
+<style>
+    /* THEME & BASE */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { 
+      background-color: #f3f2e8; 
+      overflow-x: hidden; 
+      width: 100%;
+      position: relative;
+    }
+    body {
+      color: #1d3c28; font-family: 'Playfair Display', serif, 'Times New Roman';
+      margin: 0; height: 100vh; overflow-y: hidden;
+    }
 
-/* --- SWISH GAME STYLES --- */
-#swish-game-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(29, 60, 40, 0.98); display: none; justify-content: center; align-items: center; z-index: 1000001; }
-.game-card { background: #f3f2e8; color: #1d3c28; padding: 40px; border-radius: 20px; width: 90%; max-width: 450px; text-align: center; position: relative; }
-#swish-action-btn { width: 140px; height: 140px; border-radius: 50%; border: 6px solid #1d3c28; background: transparent; color: #1d3c28; font-size: 22px; font-weight: 900; cursor: pointer; margin: 20px 0; }
-#swish-action-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+    /* --- PREMIUM SEQUENTIAL LOADER --- */
+    #loader {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+      background: #f3f2e8; display: flex; justify-content: center; align-items: center; 
+      z-index: 9999999; overflow: hidden;
+    }
+    #website { 
+      opacity: 0; filter: blur(30px); transition: opacity 1s ease, filter 1.5s ease; 
+      position: relative; width: 100%; overflow-x: hidden;
+    }
+    .show-site { opacity: 1 !important; filter: blur(0) !important; }
 
-#hurray-popup { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); display: none; justify-content: center; align-items: center; z-index: 1000005; }
-.hurray-card { background: #f3f2e8; padding: 40px; border-radius: 20px; text-align: center; transform: scale(0.8); transition: 0.3s; }
-.hurray-card.show { transform: scale(1); }
-</style>
+    /* SMOKE EFFECT */
+    .smoke-container { position: absolute; width: 100%; height: 100%; top: 0; left: 0; overflow: hidden; pointer-events: none; z-index: 10; }
+    .smoke-particle { 
+      position: absolute; bottom: -200px; 
+      width: 700px; height: 700px; 
+      background: radial-gradient(circle, rgba(29, 60, 40, 0.6) 0%, transparent 70%); 
+      filter: blur(80px); border-radius: 50%; opacity: 0; 
+      animation: herbalSmokeRise 6s ease-out forwards; 
+    }
+    .smoke-particle:nth-child(1) { left: -10%; }
+    .smoke-particle:nth-child(2) { left: 30%; width: 900px; animation-delay: 0.5s; }
+    .smoke-particle:nth-child(3) { left: 60%; animation-delay: 0.2s; }
+    .smoke-particle:nth-child(4) { left: 85%; width: 800px; animation-delay: 0.8s; }
+    @keyframes herbalSmokeRise { 0% { transform: translateY(0) scale(1); opacity: 0; } 20% { opacity: 1; } 80% { opacity: 0.8; } 100% { transform: translateY(-130vh) scale(3); opacity: 0; } }
 
+    /* WRITING & ZOOM LOADER */
+    .writing-container { width: 90%; max-width: 900px; z-index: 5; opacity: 0; display: flex; justify-content: center; align-items: center; animation: fadeInReveal 0.8s ease forwards 3s; }
+    .writing-container svg { width: 100%; height: auto; overflow: visible; }
+    .writing-container text { font-family: 'Playfair Display', serif; font-size: 85px; font-weight: 900; font-style: italic; fill: none; stroke: #1d3c28; stroke-width: 1.5; stroke-dasharray: 1200; stroke-dashoffset: 1200; text-anchor: middle; filter: drop-shadow(0 0 10px rgba(29, 60, 40, 0.4)); transform-origin: center; animation: writeText 2.5s ease-out forwards 3.5s, fillText 1s ease forwards 6s, zoomToFace 1.5s cubic-bezier(0.7, 0, 0.3, 1) forwards 8s; }
+    @keyframes writeText { 0% { stroke-dashoffset: 1200; } 100% { stroke-dashoffset: 0; } }
+    @keyframes fillText { 0% { fill: rgba(29, 60, 40, 0); } 100% { fill: rgba(29, 60, 40, 1); } }
+    @keyframes fadeInReveal { to { opacity: 1; } }
+    @keyframes zoomToFace { 0% { transform: scale(1); opacity: 1; filter: blur(0); } 100% { transform: scale(12); opacity: 0; filter: blur(10px); } }
+    .loader-finish { opacity: 0 !important; visibility: hidden !important; transition: 0.8s ease; }
+
+    /* SEAMLESS BANNER */
+    .promo-banner { width: 100%; background-color: #1d3c28; color: #f3f2e8; padding: 12px 0; overflow: hidden; display: flex; white-space: nowrap; }
+    .banner-wrap { display: flex; animation: scrollSeamless 20s linear infinite; width: max-content; }
+    .banner-wrap span { font-size: 13px; font-weight: bold; text-transform: uppercase; letter-spacing: 3px; padding-right: 80px; display: inline-block; }
+    @keyframes scrollSeamless { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+    /* HEADER & CENTER TITLE */
+    .header { width: 100%; padding-top: 15px; position: relative; z-index: 1000; }
+    .tagline { display: block; text-align: center; font-size: 11px; text-transform: uppercase; letter-spacing: 6px; font-weight: 700; margin-bottom: 10px; opacity: 0.8; }
+    .nav-bar { display: flex; justify-content: space-between; align-items: center; padding: 10px 6%; border-bottom: 1px solid rgba(29, 60, 40, 0.1); position: relative; }
+    .brand-logo { height: 110px; width: auto; cursor: pointer; }
+    .brand-title-center { position: absolute; left: 50%; transform: translateX(-50%); font-size: 28px; font-weight: 900; text-transform: uppercase; letter-spacing: 12px; color: #1d3c28; pointer-events: none; white-space: nowrap; }
+    .nav-right { display: flex; align-items: center; gap: 40px; }
+    
+    /* DROPDOWN MENU */
+    .dropdown { position: relative; }
+    .dropbtn { background: none; border: none; color: #1d3c28; font-size: 14px; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; }
+    .dropdown-content { visibility: hidden; opacity: 0; position: absolute; background-color: #ffffff; min-width: 220px; right: 0; border-radius: 4px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); transform: translateY(15px); transition: 0.3s ease; }
+    .dropdown:hover .dropdown-content { visibility: visible; opacity: 1; transform: translateY(10px); }
+    .dropdown-content a { color: #1d3c28; padding: 15px 20px; text-decoration: none; display: block; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; }
+    .dropdown-content a:hover { background-color: #1d3c28; color: #f3f2e8; }
+
+    .hero { padding: 100px 20px 60px; text-align: center; }
+    .hero h1 { font-size: clamp(40px, 9vw, 90px); margin-bottom: 25px; line-height: 1.1; }
+    .shop-now { background: transparent; border: 1.5px solid #1d3c28; padding: 20px 60px; cursor: pointer; font-weight: bold; letter-spacing: 4px; transition: 0.3s; }
+    .shop-now:hover { background: #1d3c28; color: #f3f2e8; }
+
+    /* REVIEWS SECTION */
+    .reviews-section { padding: 80px 6%; text-align: center; border-top: 1px solid rgba(29, 60, 40, 0.05); }
+    .rating-summary { display: flex; justify-content: center; align-items: center; gap: 10px; margin-bottom: 40px; }
+    .stars { color: #f1c40f; font-size: 18px; }
+    .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+    .review-card { background: rgba(29, 60, 40, 0.03); padding: 30px; border-radius: 15px; text-align: left; border: 1px solid rgba(29, 60, 40, 0.05); transition: 0.3s; }
+    .review-card:hover { transform: translateY(-10px); background: #fff; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+    .verified-badge { color: #2ecc71; font-size: 11px; font-weight: bold; text-transform: uppercase; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; letter-spacing: 1px; }
+    .review-name { font-weight: 900; margin-bottom: 8px; display: block; font-size: 16px; }
+
+    /* FOOTER */
+    .footer { background-color: #f3f2e8; padding: 100px 6% 40px 6%; border-top: 1px solid rgba(29, 60, 40, 0.1); display: flex; flex-direction: column; align-items: center; }
+    .footer-content { width: 100%; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 50px; margin-bottom: 60px; }
+    .footer-section h3 { font-size: 15px; text-transform: uppercase; letter-spacing: 4px; margin-bottom: 25px; font-weight: bold; }
+    .footer-section a { font-size: 14px; color: #1d3c28; text-decoration: none; display: block; margin-bottom: 18px; opacity: 0.7; transition: 0.4s; cursor: pointer; width: fit-content; }
+    .footer-section a:hover { opacity: 1; transform: translateX(12px); font-weight: bold; }
+    .copyright { font-size: 11px; opacity: 0.4; text-transform: uppercase; letter-spacing: 3px; border-top: 1px solid rgba(29, 60, 40, 0.1); padding-top: 40px; width: 100%; text-align: center; }
+
+    /* SOCIALS (LEFT) */
+    .social-float { position: absolute; left: 30px; z-index: 99999; width: 60px; height: 60px; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; box-shadow: 2px 2px 15px rgba(0,0,0,0.3); transition: 0.3s; }
+    .whatsapp-float { top: 600px; background-color: #25d366; }
+    .insta-float { top: 680px; background: linear-gradient(45deg, #f09433, #bc1888); }
+
+    /* --- AI ASSISTANT (RIGHT SIDE - IN LINE WITH SOCIALS) --- */
+    #ai-assistant { position: absolute; top: 600px; right: 30px; z-index: 100000; }
+    .ai-btn { background: #1d3c28; color: #f3f2e8; width: 60px; height: 60px; border-radius: 50%; border: none; font-size: 25px; cursor: pointer; box-shadow: 0 10px 30px rgba(0,0,0,0.2); transition: 0.3s; }
+    .ai-btn:hover { transform: scale(1.1); }
+    .chat-window { 
+      position: absolute; bottom: 80px; right: 0; width: 300px; 
+      background: #f3f2e8; border: 1px solid #1d3c28; border-radius: 15px; 
+      box-shadow: 0 10px 40px rgba(0,0,0,0.2); display: none; overflow: hidden; 
+      flex-direction: column;
+    }
+    .chat-header { background: #1d3c28; color: #f3f2e8; padding: 15px; font-weight: bold; font-size: 14px; text-align: center; }
+    .chat-body { padding: 20px; font-size: 13px; line-height: 1.5; color: #1d3c28; max-height: 350px; overflow-y: auto; }
+    .ai-option-btn { background: #ffffff; color: #1d3c28; border: 1px solid #1d3c28; width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 5px; cursor: pointer; font-weight: bold; text-align: left; transition: 0.3s; }
+    .ai-option-btn:hover { background: #1d3c28; color: #f3f2e8; }
+    .chat-msg { margin-bottom: 15px; padding: 10px; background: rgba(29, 60, 40, 0.05); border-radius: 8px; }
+    .back-btn-ai { background: none; border: none; color: #1d3c28; text-decoration: underline; cursor: pointer; font-size: 12px; margin-top: 10px; }
+
+    /* BOTTLE PROMO */
+    #bottle-promo-container { position: absolute; top: 480px; right: -800px; display: flex; flex-direction: column; align-items: center; z-index: 9998; cursor: pointer; visibility: hidden; }
+    .promo-text-bubble { background: #1d3c28; color: #f3f2e8; padding: 10px 18px; border-radius: 12px; font-size: 13px; font-weight: bold; margin-bottom: -30px; z-index: 2; box-shadow: 0 10px 20px rgba(0,0,0,0.2); white-space: nowrap; opacity: 0; }
+    .promo-bottle-img { width: 320px; height: auto; filter: drop-shadow(0 20px 40px rgba(0,0,0,0.2)); }
+    @keyframes bottleFullCycle { 0% { right: -800px; visibility: visible; opacity: 0; } 15% { right: 30px; opacity: 1; } 85% { right: 30px; opacity: 1; } 100% { right: -1000px; opacity: 0; visibility: hidden; } }
+    @keyframes textFadeCycle { 0%, 15% { opacity: 0; transform: translateY(20px); } 20%, 80% { opacity: 1; transform: translateY(0); } 90%, 100% { opacity: 0; transform: translateY(20px); } }
+    .animate-promo { animation: bottleFullCycle 7s cubic-bezier(0.165, 0.84, 0.44, 1) forwards; }
+    .animate-promo .promo-text-bubble { animation: textFadeCycle 7s ease forwards; }
+
+    /* GAME OVERLAYS */
+    #swish-game-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(29, 60, 40, 0.98); display: none; justify-content: center; align-items: center; z-index: 1000001; }
+    .game-card { background: #f3f2e8; color: #1d3c28; padding: 40px; border-radius: 20px; width: 90%; max-width: 450px; text-align: center; position: relative; box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
+    #swish-action-btn { width: 140px; height: 140px; border-radius: 50%; border: 6px solid #1d3c28; background: transparent; color: #1d3c28; font-size: 22px; font-weight: 900; cursor: pointer; transition: 0.1s; }
+    #hurray-popup { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: none; justify-content: center; align-items: center; z-index: 1000005; }
+    .hurray-card { background: #f3f2e8; color: #1d3c28; padding: 50px; border-radius: 25px; text-align: center; max-width: 450px; transform: scale(0.5); transition: 0.5s; }
+    .hurray-card.show { transform: scale(1); }
+  </style>
 </head>
 <body>
 
   <!-- LOADER -->
-
   <div id="loader">
-    <div class="smoke-container">
-      <div class="smoke-particle"></div><div class="smoke-particle"></div><div class="smoke-particle"></div><div class="smoke-particle"></div>
-    </div>
-    <div class="writing-container">
-      <svg viewBox="0 0 1000 200"><text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle">SECRET HERBAGE</text></svg>
-    </div>
+    <div class="smoke-container"><div class="smoke-particle"></div><div class="smoke-particle"></div><div class="smoke-particle"></div><div class="smoke-particle"></div></div>
+    <div class="writing-container"><svg viewBox="0 0 1000 200"><text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle">SECRET HERBAGE</text></svg></div>
   </div>
 
-  <!-- WEBSITE CONTENT -->
+  <div id="website">
+    <header class="header">
+      <div class="tagline">Nature's Secret Smile for You</div>
+      <nav class="nav-bar">
+        <a href="Untitled-2.html"><img src="logo.png" alt="Logo" class="brand-logo"></a>
+        <div class="brand-title-center">SECRET HERBAGE</div>
+        <div class="nav-right">
+          <div class="dropdown"><button class="dropbtn">Oral Care ▾</button><div class="dropdown-content"><a href="javascript:void(0)" onclick="handleNavigation('product.html')">PULLING OIL</a><a href="#">CHARCOAL TOOTHPASTE (SOON)</a></div></div>
+          <div class="dropdown"><button class="dropbtn">Fun ▾</button><div class="dropdown-content"><a href="javascript:void(0)" onclick="openSwishGame()">MAINTAIN YOUR ORAL HYGIENE</a></div></div>
+          <div class="cart-btn" id="cart-display" style="cursor:pointer; font-weight:bold;">🛒 (0)</div>
+        </div>
+      </nav>
+    </header>
 
+    <main>
+      <div class="promo-banner"><div class="banner-wrap"><span>Delivery all over Pakistan | Buy 1 Get 1 Free</span><span>Delivery all over Pakistan | Buy 1 Get 1 Free</span><span>Delivery all over Pakistan | Buy 1 Get 1 Free</span><span>Delivery all over Pakistan | Buy 1 Get 1 Free</span></div></div>
+      <section class="hero"><h1>Nature’s Purest <br> Secrets, Revealed.</h1><button class="shop-now" onclick="handleNavigation('product.html')">Explore Shop</button></section>
+      
+      <!-- REVIEWS -->
+      <section class="reviews-section">
+        <div class="rating-summary"><span>4.5 / 5</span><div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div></div>
+        <div class="reviews-grid">
+          <div class="review-card"><span class="verified-badge"><i class="fas fa-check-circle"></i> VERIFIED BUYER</span><span class="review-name">Sarah M.</span><p>"The pulling oil is a game changer. Teeth feel cleaner!"</p></div>
+          <div class="review-card"><span class="verified-badge"><i class="fas fa-check-circle"></i> VERIFIED BUYER</span><span class="review-name">Ahmed K.</span><p>"Best natural oral care in Pakistan. Elegant packaging."</p></div>
+          <div class="review-card"><span class="verified-badge"><i class="fas fa-check-circle"></i> VERIFIED BUYER</span><span class="review-name">Zainab R.</span><p>"Highly effective for gum health. Love the BOGO offer!"</p></div>
+        </div>
+      </section>
+    </main>
 
-code
-Code
-download
-content_copy
-expand_less
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="footer-section"><h3>Contact Us</h3><a href="mailto:secretherbage@gmail.com">secretherbage@gmail.com</a><a href="https://www.google.com/maps/place/Pakistan" target="_blank">Based in Pakistan.</a></div>
+        <div class="footer-section"><h3>Information</h3><a onclick="handleNavigation('story.html')">Our Story</a><a onclick="handleNavigation('privacy.html')">Privacy Policy</a></div>
+        <div class="footer-section"><h3>Community</h3><a href="https://www.instagram.com/secretherbage" target="_blank">Instagram</a><a href="https://www.facebook.com/secretherbage" target="_blank">Facebook</a></div>
+      </div>
+      <div class="copyright">&copy; 2026 Secret Herbage Pakistan. All Rights Reserved.</div>
+    </footer>
 
-<header class="header">
-  <div class="tagline">Nature's Secret Smile for You</div>
-  <nav class="nav-bar">
-    <img src="logo.png" alt="Logo" class="brand-logo">
-    <div class="brand-title-center">SECRET HERBAGE</div>
-    <div class="nav-right">
-      <div class="dropdown">
-        <button class="dropbtn">Shop ▾</button>
-        <div class="dropdown-content">
-          <a href="product.html">PULLING OIL</a>
-          <a href="#">CHARCOAL POWDER (SOON)</a>
+    <!-- AI ASSISTANT (RIGHT SIDE) -->
+    <div id="ai-assistant">
+      <button class="ai-btn" onclick="toggleChat()"><i class="fas fa-robot"></i></button>
+      <div class="chat-window" id="chat-window">
+        <div class="chat-header">SECRET ASSISTANT</div>
+        <div class="chat-body" id="chat-body">
+          <p class="chat-msg">Hello! How can I help you today?</p>
+          <button class="ai-option-btn" onclick="showOption('policy')">Refund/Policy</button>
+          <button class="ai-option-btn" onclick="showOption('discount')">How To get 50% OFF</button>
         </div>
       </div>
-      <!-- FUN DROPDOWN UPDATED -->
-      <div class="dropdown">
-        <button class="dropbtn">Fun ▾</button>
-        <div class="dropdown-content">
-          <a href="javascript:void(0)" onclick="openSwishGame()">GET 50% OFF NOW</a>
-        </div>
-      </div>
-      <div id="cart-display" style="font-weight:bold; cursor:pointer;">🛒 (0)</div>
     </div>
-  </nav>
-</header>
 
-<main>
-  <section class="hero">
-    <h1>Nature’s Purest <br> Secrets, Revealed.</h1>
-    <button class="shop-now" onclick="window.location.href='product.html'">Explore Shop</button>
-  </section>
-
-  <section class="reviews-section">
-    <div class="rating-summary">
-      <span>4.5 / 5</span>
-      <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
+    <!-- PROMO BOTTLE -->
+    <div id="bottle-promo-container" onclick="handleNavigation('product.html')">
+      <div class="promo-text-bubble">Anti-Aging Starts with Your Smile — Buy 1 Get 1 Free</div>
+      <img src="bottle.png" class="promo-bottle-img" alt="Bottle">
     </div>
-    <div class="reviews-grid">
-      <div class="review-card"><span class="verified-badge">✓ VERIFIED BUYER</span><b>Sarah M.</b><p>"The pulling oil is a game changer. Teeth feel cleaner!"</p></div>
-      <div class="review-card"><span class="verified-badge">✓ VERIFIED BUYER</span><b>Ahmed K.</b><p>"Best natural oral care in Pakistan. Elegant packaging."</p></div>
-      <div class="review-card"><span class="verified-badge">✓ VERIFIED BUYER</span><b>Zainab R.</b><p>"Highly effective for gum health. Love the BOGO offer!"</p></div>
-    </div>
-  </section>
-</main>
 
-<footer class="footer">
-  <div class="footer-section"><h3>CONTACT</h3><a href="mailto:secretherbage@gmail.com">secretherbage@gmail.com</a><p>Lahore, Pakistan</p></div>
-  <div class="footer-section"><h3>INFO</h3><a href="story.html">Our Story</a><a>Privacy Policy</a></div>
-  <div class="footer-section"><h3>SOCIALS</h3><a href="https://instagram.com/secretherbage" target="_blank">Instagram</a><a href="https://wa.me/923330341982" target="_blank">WhatsApp</a></div>
-</footer>
-<p style="text-align:center; padding:20px; font-size:11px; opacity:0.5;">© 2026 SECRET HERBAGE PAKISTAN. ALL RIGHTS RESERVED.</p>
+    <!-- SOCIALS (LEFT SIDE) -->
+    <a href="https://wa.me/923330341982" class="social-float whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
+    <a href="https://www.instagram.com/secretherbage/" class="social-float insta-float" target="_blank"><i class="fab fa-instagram"></i></a>
   </div>
 
-  <!-- SWISH GAME OVERLAY -->
-
-  <div id="swish-game-overlay">
-    <div class="game-card">
-      <span onclick="closeSwishGame()" style="position:absolute; right:20px; top:10px; cursor:pointer; font-size:24px;">×</span>
-      <h2>SWISH CHALLENGE</h2>
-      <p style="font-size: 14px; margin-top: 10px;">Get 80 swishes in 10s to win!</p>
-      <div style="margin:20px 0; font-weight: bold;">TIME: <span id="game-sec">10</span>s | SWISHES: <span id="game-count">0</span></div>
-      <button id="swish-action-btn" onclick="addSwish()" disabled>Swish!</button>
-      <br>
-      <button onclick="startSwishGame()" style="padding:10px 30px; cursor:pointer; background:#1d3c28; color:white; border:none; border-radius:5px;">Start Game</button>
-    </div>
-  </div>
-
-  <!-- HURRAY POPUP -->
-
-  <div id="hurray-popup">
-    <div class="hurray-card" id="hurray-card">
-      <h1 id="hurray-emoji" style="font-size: 50px;">🎉</h1>
-      <p id="hurray-msg" style="margin: 20px 0; font-weight: bold;"></p>
-      <button onclick="closeHurray()" style="padding:10px 30px; cursor:pointer; background:#1d3c28; color:white; border:none;">OK</button>
-    </div>
-  </div>
-
-  <!-- AI ASSISTANT -->
-
-  <div id="ai-assistant">
-    <button class="ai-btn" onclick="toggleChat()"><i class="fas fa-robot"></i></button>
-    <div class="chat-window" id="chat-window">
-      <div style="background:#1d3c28; color:white; padding:15px; text-align:center;">SECRET HELPER</div>
-      <div style="padding:15px; font-size:13px;">
-        <p>Want a discount?</p>
-        <button style="width:100%; margin-top:10px; padding:8px; cursor:pointer;" onclick="openSwishGame()">Play Game for 50% OFF</button>
-      </div>
-    </div>
-  </div>
-
-
-<a href="https://wa.me/923330341982" class="social-float whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
-<a href="https://www.instagram.com/secretherbage/" class="social-float insta-float" target="_blank"><i class="fab fa-instagram"></i></a>
+  <!-- GAME OVERLAYS -->
+  <div id="swish-game-overlay"><div class="game-card"><span class="close-game" onclick="closeSwishGame()">&times;</span><h2>SWISH CHALLENGE</h2><div style="display:flex; justify-content:space-around; margin:20px 0; font-weight:bold;"><div>TIME: <span id="game-sec">10</span>s</div><div>SWISHES: <span id="game-count">0</span></div></div><button id="swish-action-btn" onclick="addSwish()" disabled>Swish!</button><br><button onclick="startSwishGame()" style="margin-top:20px; padding:10px 30px; background:#1d3c28; color:#f3f2e8; border:none; border-radius:50px; cursor:pointer;">Start Game</button></div></div>
+  <div id="hurray-popup"><div class="hurray-card" id="hurray-card"><h1>🎉</h1><p id="hurray-msg" style="font-weight:bold; margin:20px 0;">Hurray! Excellent hygiene!</p><button onclick="closeHurray()" style="padding:10px 30px; background:#25d366; color:#fff; border:none; border-radius:50px; cursor:pointer;">Great!</button></div></div>
+  <audio id="victory-sound" src="victory.mp3"></audio>
 
   <script>
     // LOADER
     window.addEventListener('load', () => {
-      setTimeout(() => {
-        document.getElementById('loader').classList.add('loader-finish');
-        document.getElementById('website').classList.add('show-site');
-        document.body.style.overflowY = 'visible';
-      }, 7000); 
+      setTimeout(() => { document.getElementById('loader').classList.add('loader-finish'); document.getElementById('website').classList.add('show-site'); document.body.style.overflowY = 'visible'; }, 9500);
+      setTimeout(() => { document.getElementById('bottle-promo-container').classList.add('animate-promo'); }, 10500);
     });
 
-    function toggleChat() {
-      const win = document.getElementById('chat-window');
-      win.style.display = (win.style.display === 'flex') ? 'none' : 'flex';
+    // AI CHAT LOGIC
+    function toggleChat() { const win = document.getElementById('chat-window'); win.style.display = win.style.display === 'flex' ? 'none' : 'flex'; }
+    function showOption(type) {
+      const body = document.getElementById('chat-body');
+      if(type === 'policy') {
+        body.innerHTML = `<div class="chat-msg"><b>Refund & Policy:</b> Secret Herbage is committed to providing safe service. Damaged product? Contact us within 24-48 hours via WhatsApp for a replacement.</div><button class="back-btn-ai" onclick="resetChat()">Back</button>`;
+      } else if(type === 'discount') {
+        body.innerHTML = `<div class="chat-msg"><b>Unlock 50% OFF:</b> Go to "Fun" menu, start Swish Challenge. Click 80 times in 10s to win!</div><button class="back-btn-ai" onclick="resetChat()">Back</button>`;
+      }
+    }
+    function resetChat() {
+      document.getElementById('chat-body').innerHTML = `<p class="chat-msg">Hello! How can I help you today?</p><button class="ai-option-btn" onclick="showOption('policy')">Refund/Policy</button><button class="ai-option-btn" onclick="showOption('discount')">How To get 50% OFF</button>`;
     }
 
-    // --- SWISH GAME LOGIC ---
-    let sScore = 0, sTime = 10, sClock, sActive = false;
-    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    function handleNavigation(url) { document.getElementById('loader').classList.remove('loader-finish'); setTimeout(() => { window.location.href = url; }, 1200); }
 
-    function playClickSound() {
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-      osc.connect(gain);
-      gain.connect(audioCtx.destination);
-      osc.frequency.setValueAtTime(800, audioCtx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
-      osc.start();
-      osc.stop(audioCtx.currentTime + 0.1);
-    }
-
-    function openSwishGame() { 
-      document.getElementById('swish-game-overlay').style.display = 'flex'; 
-      if(document.getElementById('chat-window')) document.getElementById('chat-window').style.display = 'none';
-    }
-    
-    function closeSwishGame() { 
-      document.getElementById('swish-game-overlay').style.display = 'none'; 
-      clearInterval(sClock); 
-      sActive = false;
-    }
-
+    // GAME LOGIC
+    let sScore = 0, sTime = 80, sClock, sActive = false;
+    function openSwishGame() { document.getElementById('swish-game-overlay').style.display = 'flex'; resetSwish(); }
+    function closeSwishGame() { document.getElementById('swish-game-overlay').style.display = 'none'; clearInterval(sClock); sActive = false; }
     function startSwishGame() {
-      audioCtx.resume();
-      sScore = 0; sTime = 10; sActive = true;
-      document.getElementById('game-count').innerText = "0";
-      document.getElementById('game-sec').innerText = "10";
-      document.getElementById('swish-action-btn').disabled = false;
-      
+      sScore = 0; sTime = 10; sActive = true; document.getElementById('swish-action-btn').disabled = false;
       sClock = setInterval(() => {
-        sTime--;
-        document.getElementById('game-sec').innerText = sTime;
-        if(sTime <= 0){
-          clearInterval(sClock);
-          sActive = false;
-          document.getElementById('swish-action-btn').disabled = true;
-          showResult();
+        sTime--; document.getElementById('game-sec').innerText = sTime;
+        if (sTime <= 0) {
+          clearInterval(sClock); sActive = false; document.getElementById('swish-action-btn').disabled = true;
+          document.getElementById('victory-sound').play().catch(e=>{});
+          const msg = document.getElementById('hurray-msg');
+          if (sScore >= 80) { localStorage.setItem('sh_discount_50', 'true'); msg.innerHTML = "Hurray! Excellent hygiene & 50% OFF UNLOCKED!"; }
+          else { msg.innerText = "Hurray! You have maintained your oral hygiene"; }
+          document.getElementById('hurray-popup').style.display = 'flex';
+          setTimeout(() => document.getElementById('hurray-card').classList.add('show'), 10);
         }
       }, 1000);
     }
-
-    function addSwish() {
-      if(sActive) {
-        sScore++;
-        document.getElementById('game-count').innerText = sScore;
-        playClickSound();
-      }
-    }
-
-    function showResult() {
-      const msg = document.getElementById('hurray-msg');
-      const emoji = document.getElementById('hurray-emoji');
-      if(sScore >= 80){
-        localStorage.setItem('sh_discount_unlocked', 'true');
-        emoji.innerText = "🎉";
-        msg.innerText = "AMAZING! You unlocked 50% OFF. Use code: SECRET50 at checkout.";
-      } else {
-        emoji.innerText = "❌";
-        msg.innerText = `You got ${sScore} swishes. Need 80 to win. Try again!`;
-      }
-      document.getElementById('hurray-popup').style.display = 'flex';
-      setTimeout(() => document.getElementById('hurray-card').classList.add('show'), 10);
-    }
-
-    function closeHurray() {
-      document.getElementById('hurray-popup').style.display = 'none';
-      document.getElementById('hurray-card').classList.remove('show');
-      closeSwishGame();
-    }
-
+    function addSwish() { if (sActive) { sScore++; document.getElementById('game-count').innerText = sScore; } }
+    function closeHurray() { document.getElementById('hurray-card').classList.remove('show'); setTimeout(() => { document.getElementById('hurray-popup').style.display = 'none'; resetSwish(); }, 500); }
+    function resetSwish() { sScore = 0; sTime = 10; document.getElementById('game-count').innerText = 0; document.getElementById('game-sec').innerText = 10; }
     document.getElementById('cart-display').innerText = `🛒 (${localStorage.getItem('sh_cart_count') || 0})`;
   </script>
-
 </body>
-</html> AB YE CODE LO OR ISMEIN JO CART BUTTON AND HEADER MEIN US PAR JAB ARROW LEKAR JAYEIN YA CLICK KAREIN TOU PRODUCT - KAR PAYEIN
+</html>
