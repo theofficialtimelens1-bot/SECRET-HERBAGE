@@ -214,27 +214,51 @@
   </div>
 
   <script>
-    function reveal() {
-      var reveals = document.querySelectorAll(".reveal");
-      for (var i = 0; i < reveals.length; i++) {
-        var windowHeight = window.innerHeight;
-        var elementTop = reveals[i].getBoundingClientRect().top;
-        if (elementTop < windowHeight - 100) { reveals[i].classList.add("active"); }
-      }
-    }
-    window.addEventListener("scroll", reveal);
-
+    // LOADER
     window.addEventListener('load', () => {
-      setTimeout(() => { 
-        document.getElementById('loader').classList.add('loader-finish'); 
-        document.getElementById('website').classList.add('show-site');
-        document.body.style.overflowY = 'auto'; // Loader ke baad scroll khulega
-        reveal();
-      }, 9500); // Purana 9.5s timeout
-      setTimeout(() => { document.getElementById('bottle-promo-container').classList.add('animate-promo'); }, 11000);
+      setTimeout(() => { document.getElementById('loader').classList.add('loader-finish'); document.getElementById('website').classList.add('show-site'); document.body.style.overflowY = 'visible'; }, 9500);
+      setTimeout(() => { document.getElementById('bottle-promo-container').classList.add('animate-promo'); }, 10500);
     });
 
+    // AI CHAT LOGIC
     function toggleChat() { const win = document.getElementById('chat-window'); win.style.display = win.style.display === 'flex' ? 'none' : 'flex'; }
+    function showOption(type) {
+      const body = document.getElementById('chat-body');
+      if(type === 'policy') {
+        body.innerHTML = `<div class="chat-msg"><b>Refund & Policy:</b> Secret Herbage is committed to providing safe service. Damaged product? Contact us within 24-48 hours via WhatsApp for a replacement.</div><button class="back-btn-ai" onclick="resetChat()">Back</button>`;
+      } else if(type === 'discount') {
+        body.innerHTML = `<div class="chat-msg"><b>Unlock 50% OFF:</b> Go to "Fun" menu, start Swish Challenge. Click 80 times in 10s to win!</div><button class="back-btn-ai" onclick="resetChat()">Back</button>`;
+      }
+    }
+    function resetChat() {
+      document.getElementById('chat-body').innerHTML = `<p class="chat-msg">Hello! How can I help you today?</p><button class="ai-option-btn" onclick="showOption('policy')">Refund/Policy</button><button class="ai-option-btn" onclick="showOption('discount')">How To get 50% OFF</button>`;
+    }
+
+    function handleNavigation(url) { document.getElementById('loader').classList.remove('loader-finish'); setTimeout(() => { window.location.href = url; }, 1200); }
+
+    // GAME LOGIC
+    let sScore = 0, sTime = 80, sClock, sActive = false;
+    function openSwishGame() { document.getElementById('swish-game-overlay').style.display = 'flex'; resetSwish(); }
+    function closeSwishGame() { document.getElementById('swish-game-overlay').style.display = 'none'; clearInterval(sClock); sActive = false; }
+    function startSwishGame() {
+      sScore = 0; sTime = 10; sActive = true; document.getElementById('swish-action-btn').disabled = false;
+      sClock = setInterval(() => {
+        sTime--; document.getElementById('game-sec').innerText = sTime;
+        if (sTime <= 0) {
+          clearInterval(sClock); sActive = false; document.getElementById('swish-action-btn').disabled = true;
+          document.getElementById('victory-sound').play().catch(e=>{});
+          const msg = document.getElementById('hurray-msg');
+          if (sScore >= 80) { localStorage.setItem('sh_discount_50', 'true'); msg.innerHTML = "Hurray! Excellent hygiene & 50% OFF UNLOCKED!"; }
+          else { msg.innerText = "Hurray! You have maintained your oral hygiene"; }
+          document.getElementById('hurray-popup').style.display = 'flex';
+          setTimeout(() => document.getElementById('hurray-card').classList.add('show'), 10);
+        }
+      }, 1000);
+    }
+    function addSwish() { if (sActive) { sScore++; document.getElementById('game-count').innerText = sScore; } }
+    function closeHurray() { document.getElementById('hurray-card').classList.remove('show'); setTimeout(() => { document.getElementById('hurray-popup').style.display = 'none'; resetSwish(); }, 500); }
+    function resetSwish() { sScore = 0; sTime = 10; document.getElementById('game-count').innerText = 0; document.getElementById('game-sec').innerText = 10; }
+    document.getElementById('cart-display').innerText = `🛒 (${localStorage.getItem('sh_cart_count') || 0})`;
   </script>
 </body>
 </html>
