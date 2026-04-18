@@ -32,9 +32,10 @@
         <textarea name="Address" placeholder="Home Address" rows="4" required></textarea>
         <input type="text" name="City" placeholder="City" required>
         
+        <!-- Data sent to your Email -->
         <input type="hidden" name="Items" id="h-items">
         <input type="hidden" name="Total Bill" id="h-total">
-        <input type="hidden" name="Status" id="h-status">
+        <input type="hidden" name="Customer Status" id="h-status">
         
         <button type="submit" class="order-btn" id="submit-btn">Place Order (Cash on Delivery)</button>
         <p id="form-status" style="margin-top:15px; font-weight:bold;"></p>
@@ -62,30 +63,37 @@
   </div>
 
   <script>
-    // 1. DATA LOAD KARNA
-    function loadData() {
+    // 1. DATA LOAD & CALCULATION
+    function loadOrderData() {
         const count = parseInt(localStorage.getItem('sh_cart_count') || 1);
-        const hasWon = localStorage.getItem('sh_game_won');
+        const hasWon = localStorage.getItem('sh_game_won'); // index.html se winner status check
         
-        let pricePerUnit = 2400;
-        let statusText = "Standard Customer";
+        let pricePerUnit = 2400; // Normal Price
+        let statusText = "Standard Customer (Full Price)";
 
+        // DISCOUNT LOGIC
         if (hasWon === 'true') {
-            pricePerUnit = 1200;
-            statusText = "GAME WINNER (50% OFF)";
+            pricePerUnit = 1200; // 50% OFF
+            statusText = "GAME WINNER (50% OFF APPLIED)";
             document.getElementById('discount-msg').style.display = 'block';
-            document.getElementById('pricing-type').innerText = "* Winner Discount Applied!";
+            document.getElementById('pricing-type').innerText = "* Winner Discount Applied Successfully!";
+        } else {
+            document.getElementById('pricing-type').innerText = "* Normal Price: Rs. 2400 per pack";
         }
 
-        const total = count * pricePerUnit;
+        const totalValue = count * pricePerUnit;
+
+        // UI Update
         document.getElementById('qty-display').innerText = count;
-        document.getElementById('total-display').innerText = "Rs. " + total;
+        document.getElementById('total-display').innerText = "Rs. " + totalValue;
+
+        // HIDDEN FIELDS UPDATE (This data goes to your Email)
         document.getElementById('h-items').value = count + " x Pulling Oil Packs";
-        document.getElementById('h-total').value = "Rs. " + total;
+        document.getElementById('h-total').value = "Rs. " + totalValue;
         document.getElementById('h-status').value = statusText;
     }
 
-    // 2. FORM SUBMIT HANDLE KARNA (AJAX)
+    // 2. FORM SUBMIT HANDLE (AJAX)
     const form = document.getElementById("orderForm");
     
     async function handleSubmit(event) {
@@ -95,7 +103,7 @@
       const data = new FormData(event.target);
 
       btn.disabled = true;
-      btn.innerText = "Processing...";
+      btn.innerText = "Processing Your Order...";
 
       fetch("https://formspree.io/f/mgorkgpa", {
         method: 'POST',
@@ -103,32 +111,26 @@
         headers: { 'Accept': 'application/json' }
       }).then(response => {
         if (response.ok) {
-          // Success!
-          localStorage.removeItem('sh_game_won'); // Reset Discount
-          localStorage.setItem('sh_cart_count', '0'); // Clear Cart
+          // --- SUCCESS: RESET EVERYTHING ---
+          localStorage.removeItem('sh_game_won'); // One-time discount khatam
+          localStorage.setItem('sh_cart_count', '0'); // Cart khali
           
-          document.getElementById('checkout-main-area').style.display = 'none'; // Hide Form
-          document.getElementById('thank-you-area').style.display = 'block'; // Show Thank You
+          document.getElementById('checkout-main-area').style.display = 'none'; 
+          document.getElementById('thank-you-area').style.display = 'block'; 
         } else {
-          response.json().then(data => {
-            if (Object.hasOwn(data, 'errors')) {
-              status.innerHTML = data["errors"].map(error => error["message"]).join(", ");
-            } else {
-              status.innerHTML = "Oops! There was a problem submitting your form";
-            }
-            btn.disabled = false;
-            btn.innerText = "Place Order (Cash on Delivery)";
-          })
+          status.innerHTML = "Oops! There was a problem. Please try again.";
+          btn.disabled = false;
+          btn.innerText = "Place Order (Cash on Delivery)";
         }
       }).catch(error => {
-        status.innerHTML = "Oops! There was a problem connecting to the server";
+        status.innerHTML = "Connection Error. Check your internet.";
         btn.disabled = false;
         btn.innerText = "Place Order (Cash on Delivery)";
       });
     }
 
     form.addEventListener("submit", handleSubmit);
-    window.onload = loadData;
+    window.onload = loadOrderData;
   </script>
 </body>
 </html>
