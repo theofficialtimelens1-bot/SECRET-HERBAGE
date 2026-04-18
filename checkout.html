@@ -2,75 +2,206 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Checkout | Secret Herbage</title>
-    <style>
-    body { background-color: #f3f2e8; color: #1d3c28; font-family: 'Playfair Display', serif; padding: 50px 6%; }
-    .grid { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 50px; }
-    h2 { text-transform: uppercase; letter-spacing: 2px; border-bottom: 1px solid #1d3c28; padding-bottom: 10px; }
-    input, textarea { width: 100%; padding: 15px; margin-bottom: 15px; border: 1px solid #1d3c28; background: transparent; color: #1d3c28; font-size: 14px; }
-    .summary { background: #1d3c28; color: #f3f2e8; padding: 40px; border-radius: 5px; height: fit-content; }
-    .row { display: flex; justify-content: space-between; margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; }
-    .order-btn { width: 100%; background: #f3f2e8; color: #1d3c28; border: none; padding: 20px; font-weight: bold; cursor: pointer; text-transform: uppercase; font-size: 16px; transition: 0.3s; }
-    .order-btn:hover { background: #e6683c; color: white; }
-    #discount-msg { display: none; color: #ffcc00; font-weight: bold; font-size: 16px; margin-bottom: 15px; border: 1px dashed #ffcc00; padding: 10px; text-align: center; }
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Boutique Checkout | Secret Herbage</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,900;1,400&family=Montserrat:wght@300;400;700;900&display=swap');
 
-code
-Code
-download
-content_copy
-expand_less
-/* THANK YOU MESSAGE STYLES */
-#thank-you-area { display: none; text-align: center; padding: 40px; }
-#thank-you-area h1 { font-size: 40px; margin-bottom: 20px; }
-.back-home { display: inline-block; margin-top: 20px; color: #1d3c28; text-decoration: underline; cursor: pointer; font-weight: bold; }
+    :root { --primary: #1d3c28; --accent: #c5a059; --bg: #f3f2e8; }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background-color: var(--bg); color: var(--primary); font-family: 'Montserrat', sans-serif; overflow-x: hidden; }
+
+    /* LUXURY ENTRANCE */
+    .master-wrapper { max-width: 1300px; margin: 0 auto; padding: 80px 5%; animation: luxuryFade 1.2s ease; }
+    @keyframes luxuryFade { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+
+    .checkout-layout { display: grid; grid-template-columns: 1fr 500px; gap: 100px; }
+
+    /* LEFT SIDE: BOUTIQUE FORM */
+    .billing-header h1 { font-family: 'Playfair Display', serif; font-size: 75px; font-weight: 900; margin-bottom: 10px; letter-spacing: -3px; line-height: 1; }
+    .billing-header p { text-transform: uppercase; letter-spacing: 8px; font-size: 14px; margin-bottom: 60px; opacity: 0.6; font-weight: bold; }
+
+    .input-wrapper { position: relative; margin-bottom: 50px; }
+    .input-wrapper input, .input-wrapper textarea {
+      width: 100%; padding: 20px 0; background: transparent; border: none;
+      border-bottom: 2px solid rgba(29, 60, 40, 0.2); font-size: 20px; color: var(--primary);
+      outline: none; transition: 0.4s; font-family: inherit; font-weight: 500;
+    }
+    .input-wrapper label {
+      position: absolute; top: 20px; left: 0; font-size: 14px; text-transform: uppercase;
+      letter-spacing: 4px; opacity: 0.5; transition: 0.4s; pointer-events: none; font-weight: bold;
+    }
+    .input-wrapper input:focus ~ label, .input-wrapper input:valid ~ label,
+    .input-wrapper textarea:focus ~ label, .input-wrapper textarea:valid ~ label {
+      top: -20px; opacity: 1; color: var(--accent); font-size: 12px;
+    }
+    .input-wrapper input:focus { border-bottom: 3px solid var(--primary); }
+
+    /* RIGHT SIDE: PREMIUM SUMMARY */
+    .summary-pane { 
+      background: white; padding: 60px; border-radius: 0px; height: fit-content;
+      box-shadow: 0 60px 120px rgba(0,0,0,0.06); position: sticky; top: 50px;
+      border: 1px solid rgba(29,60,40,0.05);
+    }
+    .summary-pane h2 { font-family: 'Playfair Display', serif; font-size: 32px; margin-bottom: 40px; letter-spacing: 2px; text-transform: uppercase; font-weight: 900; }
+    
+    .row { display: flex; justify-content: space-between; margin-bottom: 25px; font-size: 18px; color: rgba(29,60,40,0.8); }
+    .total-row { border-top: 2px solid var(--bg); margin-top: 40px; padding-top: 40px; font-size: 50px; font-family: 'Playfair Display', serif; font-weight: 900; color: var(--primary); }
+
+    /* DISCOUNT LOGIC UI */
+    .status-badge { 
+      background: var(--primary); color: white; padding: 12px; font-size: 12px; 
+      font-weight: 900; display: none; margin-bottom: 30px; letter-spacing: 3px;
+      text-align: center; text-transform: uppercase;
+    }
+    .strike-price { text-decoration: line-through; opacity: 0.4; font-size: 16px; }
+
+    /* SEXY CONFIRM BUTTON */
+    .confirm-btn {
+      width: 100%; background: var(--primary); color: white; border: none; padding: 30px;
+      font-weight: 900; text-transform: uppercase; letter-spacing: 8px; cursor: pointer;
+      transition: 0.5s; font-size: 16px; margin-top: 40px; box-shadow: 0 20px 40px rgba(29,60,40,0.2);
+    }
+    .confirm-btn:hover { background: #000; transform: translateY(-8px); box-shadow: 0 30px 60px rgba(0,0,0,0.2); letter-spacing: 10px; }
+
+    @media (max-width: 1000px) {
+      .checkout-layout { grid-template-columns: 1fr; }
+      .billing-header h1 { font-size: 55px; }
+      .summary-pane { position: static; margin-top: 50px; }
+    }
   </style>
 </head>
 <body>
-  <div id="main-checkout" class="grid">
-    <form id="orderForm">
-      <h2>Billing</h2>
-      <input type="text" name="Name" placeholder="Full Name" required>
-      <input type="text" name="Phone" placeholder="WhatsApp" required>
-      <input type="text" name="Address" placeholder="Address" required>
-      <input type="hidden" name="Total Bill" id="h-total">
-      <input type="hidden" name="Discount Status" id="h-status">
-      <button type="submit" id="s-btn" style="width:100%; padding:15px; cursor:pointer; background:#f3f2e8; font-weight:bold;">PLACE ORDER</button>
-    </form>
-    <div class="summary">
-      <h2>Order Summary</h2>
-      <p id="d-msg" style="display:none; color:#ffcc00;">🎉 50% OFF APPLIED</p>
-      <h1 id="total-display">Rs. 2,400</h1>
+
+  <div class="master-wrapper">
+    <div class="checkout-layout">
+      
+      <!-- FORM SIDE -->
+      <div class="billing-pane">
+        <div class="billing-header">
+          <h1>Boutique.</h1>
+          <p>Shipment & Information Details</p>
+        </div>
+
+        <form id="luxuryForm">
+          <div class="input-wrapper">
+            <input type="text" name="Full_Name" required>
+            <label>Full Name</label>
+          </div>
+          <div class="input-wrapper">
+            <input type="text" name="WhatsApp_Number" required>
+            <label>WhatsApp Number</label>
+          </div>
+          <div class="input-wrapper">
+            <textarea name="Shipping_Address" rows="1" required></textarea>
+            <label>Shipping Address</label>
+          </div>
+          <div class="input-wrapper">
+            <input type="text" name="City" required>
+            <label>City</label>
+          </div>
+
+          <!-- DATA FOR GMAIL -->
+          <input type="hidden" name="Items" id="h-items">
+          <input type="hidden" name="Bill" id="h-total">
+          <input type="hidden" name="Discount" id="h-discount">
+
+          <button type="submit" class="confirm-btn" id="submitBtn">Confirm Order</button>
+        </form>
+        <p style="margin-top: 50px;"><a href="index.html" style="color:var(--primary); text-decoration:none; font-size:14px; font-weight:900; letter-spacing:3px; border-bottom: 2px solid var(--primary);">← RETURN TO SHOP</a></p>
+      </div>
+
+      <!-- SUMMARY SIDE -->
+      <div class="summary-pane">
+        <div class="status-badge" id="win-badge">LOYALTY REWARD: 50% OFF ACTIVATED</div>
+        <h2>Order Bag</h2>
+        
+        <div class="row">
+          <span>Pulling Oil (BOGO Offer)</span>
+          <span id="qty-box" style="font-weight: 900;">1 Pack</span>
+        </div>
+
+        <div class="row">
+          <span>Retail Price</span>
+          <span id="old-price-display">Rs. 2400</span>
+        </div>
+
+        <div class="row">
+          <span>Shipment</span>
+          <span style="font-weight: 900; color: var(--accent);">INCLUDED</span>
+        </div>
+
+        <div class="row total-row">
+          <span>Total.</span>
+          <span id="payable-total">Rs. 2400</span>
+        </div>
+
+        <div style="margin-top: 50px; border-top: 1px solid var(--bg); padding-top: 30px;">
+          <p style="font-size: 12px; text-align: center; opacity: 0.5; line-height: 2; font-weight: bold; letter-spacing: 1px;">
+            SECURE CHECKOUT • CASH ON DELIVERY
+          </p>
+        </div>
+      </div>
+
     </div>
-  </div>
-    <a href="index.html" class="back-home">Back to Homepage</a>
   </div>
 
   <script>
-    window.onload = () => {
-      let price = (localStorage.getItem('sh_discount_unlocked') === 'true') ? 1200 : 2400;
-      if(price === 1200) document.getElementById('d-msg').style.display = "block";
-      document.getElementById('total-display').innerText = "Rs. " + price;
-      document.getElementById('h-total').value = "Rs. " + price;
-      document.getElementById('h-status').value = (price === 1200) ? "GAME WINNER" : "NORMAL";
-    };
+    // 1. PRICE ENGINE
+    function calculate() {
+        const isWinner = localStorage.getItem('sh_discount_50') === 'true';
+        const qty = parseInt(localStorage.getItem('sh_cart_count') || 1);
+        
+        const standard = 2400 * qty;
+        const discounted = 1200 * qty;
+        const final = isWinner ? discounted : standard;
 
-    document.getElementById('orderForm').onsubmit = async (e) => {
+        document.getElementById('qty-box').innerText = qty + " Pack(s)";
+        document.getElementById('old-price-display').innerText = "Rs. " + standard;
+        document.getElementById('payable-total').innerText = "Rs. " + final;
+
+        if(isWinner) {
+            document.getElementById('win-badge').style.display = 'block';
+            document.getElementById('old-price-display').classList.add('strike-price');
+            document.getElementById('h-discount').value = "50% OFF (CHALLENGE WINNER)";
+        } else {
+            document.getElementById('h-discount').value = "Standard Pricing";
+        }
+
+        document.getElementById('h-items').value = qty + " x Pulling Oil Packs";
+        document.getElementById('h-total').value = "Rs. " + final;
+    }
+
+    calculate();
+
+    // 2. REDIRECT ON SUCCESS
+    const form = document.getElementById('luxuryForm');
+    form.addEventListener("submit", function(e) {
       e.preventDefault();
-      const btn = document.getElementById('s-btn');
-      btn.innerText = "Processing...";
-      
-      const res = await fetch("https://formspree.io/f/mgorkgpa", {
-        method: 'POST', body: new FormData(e.target), headers: { 'Accept': 'application/json' }
-      });
+      const b = document.getElementById('submitBtn');
+      b.innerText = "Processing...";
+      b.disabled = true;
 
-      if (res.ok) {
-        // RESET EVERYTHING AFTER ORDER
-        localStorage.removeItem('sh_discount_unlocked');
-        localStorage.setItem('sh_cart_count', 0);
-        document.getElementById('main-checkout').style.display = 'none';
-        document.getElementById('thank-you').style.display = 'block';
-      }
-    };
+      fetch("https://formspree.io/f/mgorkgpa", {
+        method: "POST",
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      }).then(res => {
+        if(res.ok) {
+          // RESET MEMORY
+          localStorage.removeItem('sh_discount_50');
+          localStorage.setItem('sh_cart_count', 0);
+          
+          // REDIRECT TO THANK YOU PAGE
+          window.location.href = 'thankyou.html';
+        } else {
+          alert("Error! Try again.");
+          b.disabled = false;
+        }
+      });
+    });
   </script>
 </body>
 </html>
