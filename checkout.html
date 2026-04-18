@@ -10,41 +10,78 @@
     .summary { background: #1d3c28; color: #f3f2e8; padding: 40px; }
     .row { display: flex; justify-content: space-between; margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; }
     .order-btn { width: 100%; background: #f3f2e8; color: #1d3c28; border: none; padding: 20px; font-weight: bold; cursor: pointer; text-transform: uppercase; }
+    #discount-row { display: none; color: #ffcc00; } /* Shuru mein hidden */
   </style>
 </head>
 <body>
   <div class="grid">
     <div>
       <h2>Billing Details</h2>
-      <form action="https://formspree.io/f/mgorkgpa" method="POST">
+      <!-- Formspree ID remains the same -->
+      <form id="orderForm" action="https://formspree.io/f/mgorkgpa" method="POST">
         <input type="text" name="Name" placeholder="Full Name" required>
         <input type="text" name="Phone" placeholder="WhatsApp Number" required>
         <textarea name="Address" placeholder="Home Address" rows="4" required></textarea>
         <input type="text" name="City" placeholder="City" required>
         
-        <!-- Order Data Hidden Fields -->
         <input type="hidden" name="Items" id="h-items">
         <input type="hidden" name="Total Bill" id="h-total">
+        <input type="hidden" name="Discount Applied" id="h-discount">
         
         <button type="submit" class="order-btn">Place Order (Cash on Delivery)</button>
       </form>
     </div>
+
     <div class="summary">
       <h2>Order Summary</h2>
       <div class="row"><span>Product:</span><span>Pulling Oil (BOGO)</span></div>
       <div class="row"><span>Quantity:</span><span id="qty">0</span></div>
-      <div class="row" style="color:#ffcc00;"><span>Discount:</span><span>50% OFF Applied</span></div>
+      
+      <!-- Discount Row -->
+      <div class="row" id="discount-row"><span>Discount:</span><span>50% Winner Discount</span></div>
+      
       <div class="row" style="font-size:24px; font-weight:bold; border:none;"><span>Total:</span><span id="total">Rs. 0</span></div>
-      <p>* Free Delivery all over Pakistan</p>
+      <p id="price-note">* Normal Price: Rs. 2400 per unit</p>
     </div>
   </div>
+
   <script>
-    let count = localStorage.getItem('sh_cart_count') || 1;
-    let finalTotal = count * 1200; // Rs. 2400 per pack, so 50% discount logic as per your request
-    document.getElementById('qty').innerText = count;
-    document.getElementById('total').innerText = "Rs. " + finalTotal;
-    document.getElementById('h-items').value = count + " x Pulling Oil Packs";
-    document.getElementById('h-total').value = "Rs. " + finalTotal;
+    function calculateFinalBill() {
+        let count = parseInt(localStorage.getItem('sh_cart_count') || 1);
+        let gameWon = localStorage.getItem('sh_game_won');
+        let alreadyUsed = localStorage.getItem('sh_discount_used');
+        
+        let pricePerUnit = 2400; // Default Full Price
+        let isDiscounted = false;
+
+        // Condition: Jeeta ho aur pehle use na kiya ho
+        if (gameWon === 'true' && alreadyUsed !== 'true') {
+            pricePerUnit = 1200; // 50% Off
+            isDiscounted = true;
+            document.getElementById('discount-row').style.display = 'flex';
+            document.getElementById('price-note').innerText = "* Winner Discount Applied!";
+        } else {
+            document.getElementById('discount-row').style.display = 'none';
+            document.getElementById('price-note').innerText = "* Normal Price Applied";
+        }
+
+        let finalTotal = count * pricePerUnit;
+
+        document.getElementById('qty').innerText = count;
+        document.getElementById('total').innerText = "Rs. " + finalTotal;
+        document.getElementById('h-items').value = count + " x Pulling Oil Packs";
+        document.getElementById('h-total').value = "Rs. " + finalTotal;
+        document.getElementById('h-discount').value = isDiscounted ? "50% OFF (Game Winner)" : "None (Full Price)";
+    }
+
+    // Jab banda Order Place kare, discount ko expire kardo
+    document.getElementById('orderForm').onsubmit = function() {
+        localStorage.setItem('sh_discount_used', 'true');
+        localStorage.setItem('sh_game_won', 'false'); // Wapsi eligibility khatam
+        // Cart bhi clear karna chahein toh: localStorage.setItem('sh_cart_count', 0);
+    };
+
+    window.onload = calculateFinalBill;
   </script>
 </body>
 </html>
