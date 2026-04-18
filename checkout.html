@@ -7,18 +7,17 @@
     body { background-color: #f3f2e8; color: #1d3c28; font-family: 'Playfair Display', serif; padding: 50px 6%; }
     .grid { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 50px; }
     h2 { text-transform: uppercase; letter-spacing: 2px; border-bottom: 1px solid #1d3c28; padding-bottom: 10px; }
-    input, textarea { width: 100%; padding: 15px; margin-bottom: 15px; border: 1px solid #1d3c28; background: transparent; }
+    input, textarea { width: 100%; padding: 15px; margin-bottom: 15px; border: 1px solid #1d3c28; background: transparent; color: #1d3c28; }
     .summary { background: #1d3c28; color: #f3f2e8; padding: 40px; border-radius: 5px; }
     .row { display: flex; justify-content: space-between; margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; }
-    .order-btn { width: 100%; background: #f3f2e8; color: #1d3c28; border: none; padding: 20px; font-weight: bold; cursor: pointer; text-transform: uppercase; font-size: 16px; }
+    .order-btn { width: 100%; background: #f3f2e8; color: #1d3c28; border: none; padding: 20px; font-weight: bold; cursor: pointer; text-transform: uppercase; font-size: 16px; transition: 0.3s; }
     .order-btn:hover { background: #e6683c; color: white; }
-    #discount-msg { display: none; color: #ffcc00; font-weight: bold; font-size: 14px; margin-bottom: 10px; }
+    #discount-msg { display: none; color: #ffcc00; font-weight: bold; font-size: 16px; margin-bottom: 15px; border: 1px dashed #ffcc00; padding: 10px; text-align: center; }
   </style>
 </head>
 <body>
 
   <div class="grid">
-    <!-- Form Side -->
     <div>
       <h2>Billing Details</h2>
       <form id="orderForm" action="https://formspree.io/f/mgorkgpa" method="POST">
@@ -27,63 +26,70 @@
         <textarea name="Address" placeholder="Home Address" rows="4" required></textarea>
         <input type="text" name="City" placeholder="City" required>
         
-        <!-- Hidden data for your Email -->
         <input type="hidden" name="Items" id="h-items">
         <input type="hidden" name="Total Bill" id="h-total">
         <input type="hidden" name="Status" id="h-status">
         
-        <button type="submit" class="order-btn">Complete Order (COD)</button>
+        <button type="submit" class="order-btn" id="submit-btn">Place Order (Cash on Delivery)</button>
       </form>
     </div>
 
-    <!-- Summary Side -->
     <div class="summary">
       <h2>Order Summary</h2>
-      <div id="discount-msg">🎉 50% WINNER DISCOUNT APPLIED!</div>
+      <div id="discount-msg">🎉 50% GAME WINNER DISCOUNT APPLIED!</div>
       
-      <div class="row"><span>Product:</span><span>Pulling Oil (BOGO)</span></div>
+      <div class="row"><span>Product:</span><span>Pulling Oil (BOGO Pack)</span></div>
       <div class="row"><span>Quantity:</span><span id="qty-display">0</span></div>
       
       <div class="row" style="font-size:28px; font-weight:bold; border:none; margin-top:20px;">
         <span>Total:</span>
         <span id="total-display">Rs. 0</span>
       </div>
-      <p style="font-size:12px; opacity:0.8;">* Free Shipping All Over Pakistan</p>
+      <p id="pricing-type" style="font-size:12px; opacity:0.8;">* Standard Price Applied</p>
     </div>
   </div>
 
   <script>
     function processOrder() {
-        let count = parseInt(localStorage.getItem('sh_cart_count') || 1);
-        // Check if user won the game
-        let hasWon = localStorage.getItem('sh_game_won') === 'true';
+        // LocalStorage values
+        const count = parseInt(localStorage.getItem('sh_cart_count') || 1);
+        const hasWon = localStorage.getItem('sh_game_won'); // Check winning status
         
-        let pricePerUnit = 2400; // Normal Price
-        let statusText = "Normal Customer (Full Price)";
+        let pricePerUnit = 2400; // Default Standard Price
+        let statusText = "Standard Customer (Full Price)";
 
-        if (hasWon) {
-            pricePerUnit = 1200; // 50% Off Price
-            statusText = "GAME WINNER (50% OFF Applied)";
+        // Winner Logic - Sirf tab chale jab winner status 'true' ho
+        if (hasWon === 'true') {
+            pricePerUnit = 1200; // 50% Off
+            statusText = "GAME WINNER (50% OFF)";
             document.getElementById('discount-msg').style.display = 'block';
+            document.getElementById('pricing-type').innerText = "* Winner Discount Applied!";
+        } else {
+            document.getElementById('discount-msg').style.display = 'none';
+            document.getElementById('pricing-type').innerText = "* Standard Price: Rs. 2400 per pack";
         }
 
-        let finalTotal = count * pricePerUnit;
+        const finalTotal = count * pricePerUnit;
 
         // Display on UI
         document.getElementById('qty-display').innerText = count;
         document.getElementById('total-display').innerText = "Rs. " + finalTotal;
 
-        // Fill Hidden Fields for Email
+        // Fill Hidden Fields for Formspree
         document.getElementById('h-items').value = count + " x Pulling Oil Packs";
         document.getElementById('h-total').value = "Rs. " + finalTotal;
         document.getElementById('h-status').value = statusText;
     }
 
-    // FORM SUBMIT HONE PAR DISCOUNT KHATAM KARDO
-    document.getElementById('orderForm').onsubmit = function() {
-        localStorage.setItem('sh_game_won', 'false'); // Discount Expired for next time
-        // localStorage.setItem('sh_cart_count', '0'); // Optional: Cart clear karna ho toh
-    };
+    // RESET LOGIC ON SUBMIT
+    const form = document.getElementById('orderForm');
+    form.addEventListener('submit', function() {
+        // Order place hote hi Winner status khatam
+        localStorage.removeItem('sh_game_won'); 
+        localStorage.setItem('sh_game_won', 'false');
+        // Cart bhi khali karni hai toh ye line on karlo:
+        // localStorage.setItem('sh_cart_count', '0');
+    });
 
     window.onload = processOrder;
   </script>
