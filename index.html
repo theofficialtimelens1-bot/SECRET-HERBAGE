@@ -253,7 +253,7 @@
         if (sTime <= 0) {
           clearInterval(sClock); sActive = false; document.getElementById('swish-action-btn').disabled = true;
           const msg = document.getElementById('hurray-msg');
-          if (sScore >= 80) { localStorage.setItem('sh_game_won', 'true'); msg.innerHTML = "Hurray! 50% OFF UNLOCKED!"; }
+          if (sScore >= 10) { localStorage.setItem('sh_game_won', 'true'); msg.innerHTML = "Hurray! 50% OFF UNLOCKED!"; }
           else { msg.innerText = "Hurray! Hygiene maintained!"; }
           document.getElementById('hurray-popup').style.display = 'flex';
           setTimeout(() => document.getElementById('hurray-card').classList.add('show'), 10);
