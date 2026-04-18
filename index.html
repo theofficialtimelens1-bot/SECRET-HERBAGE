@@ -212,6 +212,10 @@
       <img src="bottle.png" class="promo-bottle-img" alt="Bottle">
     </div>
   </div>
+  
+<!-- GAME OVERLAYS -->
+  <div id="swish-game-overlay"><div class="game-card"><span class="close-game" onclick="closeSwishGame()">&times;</span><h2>SWISH CHALLENGE</h2><div style="display:flex; justify-content:space-around; margin:20px 0; font-weight:bold;"><div>TIME: <span id="game-sec">10</span>s</div><div>SWISHES: <span id="game-count">0</span></div></div><button id="swish-action-btn" onclick="addSwish()" disabled>Swish!</button><br><button onclick="startSwishGame()" style="margin-top:20px; padding:10px 30px; background:#1d3c28; color:#f3f2e8; border:none; border-radius:50px; cursor:pointer;">Start Game</button></div></div>
+  <div id="hurray-popup"><div class="hurray-card" id="hurray-card"><h1>🎉</h1><p id="hurray-msg" style="font-weight:bold; margin:20px 0;">Hurray! Excellent hygiene!</p><button onclick="closeHurray()" style="padding:10px 30px; background:#25d366; color:#fff; border:none; border-radius:50px; cursor:pointer;">Great!</button></div></div>
 
   <script>
     // LOADER
