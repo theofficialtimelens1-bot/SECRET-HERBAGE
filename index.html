@@ -56,12 +56,6 @@
     @keyframes zoomToFace { 0% { transform: scale(1); opacity: 1; filter: blur(0); } 100% { transform: scale(12); opacity: 0; filter: blur(10px); } }
     .loader-finish { opacity: 0 !important; visibility: hidden !important; transition: 0.8s ease; }
 
-    /* SEAMLESS BANNER */
-    .promo-banner { width: 100%; background-color: #1d3c28; color: #f3f2e8; padding: 12px 0; overflow: hidden; display: flex; white-space: nowrap; }
-    .banner-wrap { display: flex; animation: scrollSeamless 20s linear infinite; width: max-content; }
-    .banner-wrap span { font-size: 13px; font-weight: bold; text-transform: uppercase; letter-spacing: 3px; padding-right: 80px; display: inline-block; }
-    @keyframes scrollSeamless { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-
     /* HEADER & CENTER TITLE */
     .header { width: 100%; padding-top: 15px; position: relative; z-index: 1000; }
     .tagline { display: block; text-align: center; font-size: 11px; text-transform: uppercase; letter-spacing: 6px; font-weight: 700; margin-bottom: 10px; opacity: 0.8; }
@@ -80,8 +74,6 @@
 
     .hero { padding: 100px 20px 60px; text-align: center; }
     .hero h1 { font-size: clamp(40px, 9vw, 90px); margin-bottom: 25px; line-height: 1.1; }
-    .shop-now { background: transparent; border: 1.5px solid #1d3c28; padding: 20px 60px; cursor: pointer; font-weight: bold; letter-spacing: 4px; transition: 0.3s; }
-    .shop-now:hover { background: #1d3c28; color: #f3f2e8; }
 
     /* REVIEWS SECTION */
     .reviews-section { padding: 80px 6%; text-align: center; border-top: 1px solid rgba(29, 60, 40, 0.05); }
@@ -106,22 +98,46 @@
     .whatsapp-float { top: 600px; background-color: #25d366; }
     .insta-float { top: 680px; background: linear-gradient(45deg, #f09433, #bc1888); }
 
-    /* --- AI ASSISTANT (RIGHT SIDE - IN LINE WITH SOCIALS) --- */
-    #ai-assistant { position: absolute; top: 600px; right: 30px; z-index: 100000; }
-    .ai-btn { background: #1d3c28; color: #f3f2e8; width: 60px; height: 60px; border-radius: 50%; border: none; font-size: 25px; cursor: pointer; box-shadow: 0 10px 30px rgba(0,0,0,0.2); transition: 0.3s; }
+    /* --- AI ASSISTANT FIXED TO RIGHT CENTER --- */
+    #HELPER { 
+      position: fixed; 
+      top: 50%; 
+      right: 30px; 
+      transform: translateY(-50%); 
+      z-index: 100000; 
+    }
+    .ai-btn { 
+      background: #1d3c28; 
+      color: #f3f2e8; 
+      width: 60px; 
+      height: 60px; 
+      border-radius: 50%; 
+      border: none; 
+      font-size: 25px; 
+      cursor: pointer; 
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2); 
+      transition: 0.3s; 
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
     .ai-btn:hover { transform: scale(1.1); }
     .chat-window { 
-      position: absolute; bottom: 80px; right: 0; width: 300px; 
-      background: #f3f2e8; border: 1px solid #1d3c28; border-radius: 15px; 
-      box-shadow: 0 10px 40px rgba(0,0,0,0.2); display: none; overflow: hidden; 
-      flex-direction: column;
+      position: absolute; 
+      bottom: 70px; /* Opens above the button */
+      right: 0; 
+      width: 300px; 
+      background: #f3f2e8; 
+      border: 1px solid #1d3c28; 
+      border-radius: 15px; 
+      box-shadow: 0 10px 40px rgba(0,0,0,0.2); 
+      display: none; 
+      flex-direction: column; 
+      overflow: hidden;
     }
-    .chat-header { background: #1d3c28; color: #f3f2e8; padding: 15px; font-weight: bold; font-size: 14px; text-align: center; }
-    .chat-body { padding: 20px; font-size: 13px; line-height: 1.5; color: #1d3c28; max-height: 350px; overflow-y: auto; }
     .ai-option-btn { background: #ffffff; color: #1d3c28; border: 1px solid #1d3c28; width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 5px; cursor: pointer; font-weight: bold; text-align: left; transition: 0.3s; }
     .ai-option-btn:hover { background: #1d3c28; color: #f3f2e8; }
     .chat-msg { margin-bottom: 15px; padding: 10px; background: rgba(29, 60, 40, 0.05); border-radius: 8px; }
-    .back-btn-ai { background: none; border: none; color: #1d3c28; text-decoration: underline; cursor: pointer; font-size: 12px; margin-top: 10px; }
 
     /* BOTTLE PROMO */
     #bottle-promo-container { position: absolute; top: 480px; right: -800px; display: flex; flex-direction: column; align-items: center; z-index: 9998; cursor: pointer; visibility: hidden; }
@@ -143,7 +159,7 @@
 </head>
 <body>
 
-  <!-- LOADER RESTORED -->
+  <!-- LOADER -->
   <div id="loader">
     <div class="smoke-container"><div class="smoke-particle"></div><div class="smoke-particle"></div><div class="smoke-particle"></div><div class="smoke-particle"></div></div>
     <div class="writing-container"><svg viewBox="0 0 1000 200"><text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle">SECRET HERBAGE</text></svg></div>
@@ -165,13 +181,12 @@
 
 
     <main>
-      <section class="hero reveal" style="padding: 100px 20px; text-align: center;">
-        <h1 style="font-size: 70px;">Nature’s Purest <br> Secrets, Revealed.</h1>
+      <section class="hero reveal">
+        <h1>Nature’s Purest <br> Secrets, Revealed.</h1>
         <button style="margin-top: 30px; padding: 15px 50px; background: transparent; border: 1.5px solid #1d3c28; cursor: pointer; font-weight: bold;">EXPLORE SHOP</button>
       </section>
       
-      <!-- REVIEWS RESTORED -->
-         <section class="reviews-section">
+      <section class="reviews-section">
         <div class="rating-summary"><span>4.5 / 5</span><div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div></div>
         <div class="reviews-grid">
           <div class="review-card"><span class="verified-badge"><i class="fas fa-check-circle"></i> VERIFIED BUYER</span><span class="review-name">Sarah M.</span><p>"The pulling oil is a game changer. Teeth feel cleaner!"</p></div>
@@ -189,31 +204,33 @@
       </div>
       <div class="copyright">&copy; 2026 Secret Herbage Pakistan. All Rights Reserved.</div>
     </footer>
-    <!-- AI HELPER -->
+
+    <!-- AI HELPER (Right Center) -->
     <div id="HELPER">
       <button class="ai-btn" onclick="toggleChat()"><i class="fas fa-robot"></i></button>
       <div class="chat-window" id="chat-window">
         <div style="background:#1d3c28; color:#f3f2e8; padding:15px; font-weight:bold; text-align:center;">HELPER</div>
-        <div style="padding:15px; color:#1d3c28; font-size: 13px;">
-            <p onclick="alert('Privacy Policy: Your data is safe.')" style="cursor:pointer; margin-bottom:10px;">1. PRIVACY/POLICY</p>
-            <p onclick="alert('Fun Game: Play the Oral Challenge to get 50% OFF!')" style="cursor:pointer;">2. 50% OFF GUIDE</p>
+        <div style="padding:15px; color:#1d3c28; font-size: 13px;" id="chat-body">
+            <p class="chat-msg">Hello! How can I help you today?</p>
+            <button class="ai-option-btn" onclick="showOption('policy')">1. PRIVACY/POLICY</button>
+            <button class="ai-option-btn" onclick="showOption('discount')">2. 50% OFF GUIDE</button>
         </div>
       </div>
     </div>
 
-    <!-- SOCIALS -->
+    <!-- SOCIALS (Left side) -->
     <a href="https://wa.me/923330341982" class="social-float whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
     <a href="https://www.instagram.com/secretherbage/" class="social-float insta-float" target="_blank"><i class="fab fa-instagram"></i></a>
 
-    <!-- BOTTLE PROMO WITH BUBBLE TEXT -->
+    <!-- BOTTLE PROMO -->
     <div id="bottle-promo-container">
       <div class="promo-text-bubble">Anti Aging Starts With Your Smile BUY 1 GET 1 NOW !!!</div>
       <img src="bottle.png" class="promo-bottle-img" alt="Bottle">
     </div>
   </div>
   
-<!-- GAME OVERLAYS -->
-  <div id="swish-game-overlay"><div class="game-card"><span class="close-game" onclick="closeSwishGame()">&times;</span><h2>SWISH CHALLENGE</h2><div style="display:flex; justify-content:space-around; margin:20px 0; font-weight:bold;"><div>TIME: <span id="game-sec">10</span>s</div><div>SWISHES: <span id="game-count">0</span></div></div><button id="swish-action-btn" onclick="addSwish()" disabled>Swish!</button><br><button onclick="startSwishGame()" style="margin-top:20px; padding:10px 30px; background:#1d3c28; color:#f3f2e8; border:none; border-radius:50px; cursor:pointer;">Start Game</button></div></div>
+  <!-- GAME OVERLAYS -->
+  <div id="swish-game-overlay"><div class="game-card"><span class="close-game" onclick="closeSwishGame()" style="position:absolute; right:20px; top:10px; cursor:pointer; font-size:24px;">&times;</span><h2>SWISH CHALLENGE</h2><div style="display:flex; justify-content:space-around; margin:20px 0; font-weight:bold;"><div>TIME: <span id="game-sec">10</span>s</div><div>SWISHES: <span id="game-count">0</span></div></div><button id="swish-action-btn" onclick="addSwish()" disabled>Swish!</button><br><button onclick="startSwishGame()" style="margin-top:20px; padding:10px 30px; background:#1d3c28; color:#f3f2e8; border:none; border-radius:50px; cursor:pointer;">Start Game</button></div></div>
   <div id="hurray-popup"><div class="hurray-card" id="hurray-card"><h1>🎉</h1><p id="hurray-msg" style="font-weight:bold; margin:20px 0;">Hurray! Excellent hygiene!</p><button onclick="closeHurray()" style="padding:10px 30px; background:#25d366; color:#fff; border:none; border-radius:50px; cursor:pointer;">Great!</button></div></div>
 
   <script>
@@ -228,19 +245,19 @@
     function showOption(type) {
       const body = document.getElementById('chat-body');
       if(type === 'policy') {
-        body.innerHTML = `<div class="chat-msg"><b>Refund & Policy:</b> Secret Herbage is committed to providing safe service. Damaged product? Contact us within 24-48 hours via WhatsApp for a replacement.</div><button class="back-btn-ai" onclick="resetChat()">Back</button>`;
+        body.innerHTML = `<div class="chat-msg"><b>Refund & Policy:</b> Secret Herbage is committed to providing safe service. Damaged product? Contact us within 24-48 hours via WhatsApp for a replacement.</div><button style="background:none; border:none; text-decoration:underline; cursor:pointer;" onclick="resetChat()">Back</button>`;
       } else if(type === 'discount') {
-        body.innerHTML = `<div class="chat-msg"><b>Unlock 50% OFF:</b> Go to "Fun" menu, start Swish Challenge. Click 80 times in 10s to win!</div><button class="back-btn-ai" onclick="resetChat()">Back</button>`;
+        body.innerHTML = `<div class="chat-msg"><b>Unlock 50% OFF:</b> Go to "Fun" menu, start Swish Challenge. Click 80 times in 10s to win!</div><button style="background:none; border:none; text-decoration:underline; cursor:pointer;" onclick="resetChat()">Back</button>`;
       }
     }
     function resetChat() {
-      document.getElementById('chat-body').innerHTML = `<p class="chat-msg">Hello! How can I help you today?</p><button class="ai-option-btn" onclick="showOption('policy')">Refund/Policy</button><button class="ai-option-btn" onclick="showOption('discount')">How To get 50% OFF</button>`;
+      document.getElementById('chat-body').innerHTML = `<p class="chat-msg">Hello! How can I help you today?</p><button class="ai-option-btn" onclick="showOption('policy')">1. PRIVACY/POLICY</button><button class="ai-option-btn" onclick="showOption('discount')">2. 50% OFF GUIDE</button>`;
     }
 
     function handleNavigation(url) { document.getElementById('loader').classList.remove('loader-finish'); setTimeout(() => { window.location.href = url; }, 1200); }
 
     // GAME LOGIC
-    let sScore = 0, sTime = 80, sClock, sActive = false;
+    let sScore = 0, sTime = 10, sClock, sActive = false;
     function openSwishGame() { document.getElementById('swish-game-overlay').style.display = 'flex'; resetSwish(); }
     function closeSwishGame() { document.getElementById('swish-game-overlay').style.display = 'none'; clearInterval(sClock); sActive = false; }
     function startSwishGame() {
@@ -249,7 +266,6 @@
         sTime--; document.getElementById('game-sec').innerText = sTime;
         if (sTime <= 0) {
           clearInterval(sClock); sActive = false; document.getElementById('swish-action-btn').disabled = true;
-          document.getElementById('victory-sound').play().catch(e=>{});
           const msg = document.getElementById('hurray-msg');
           if (sScore >= 80) { localStorage.setItem('sh_discount_50', 'true'); msg.innerHTML = "Hurray! Excellent hygiene & 50% OFF UNLOCKED!"; }
           else { msg.innerText = "Hurray! You have maintained your oral hygiene"; }
