@@ -2,235 +2,47 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pulling Oil | Secret Herbage Shop</title>
+  <title>Pulling Oil | Secret Herbage</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <style>
-    /* THEME & BASE */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body { background-color: #f3f2e8; overflow-x: hidden; width: 100%; position: relative; }
-    body { color: #1d3c28; font-family: 'Playfair Display', serif, 'Times New Roman'; margin: 0; height: 100vh; overflow-y: hidden; }
-
-    /* --- SHUTTER LOADER --- */
-    #loader {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-      background: #1d3c28; display: flex; justify-content: center; align-items: center;
-      z-index: 9999999; transition: transform 1s cubic-bezier(0.85, 0, 0.15, 1);
-      transform: translateY(0);
-    }
-    .loader-logo { color: #f3f2e8; font-size: 28px; letter-spacing: 15px; text-transform: uppercase; animation: loaderPulse 1.5s infinite; }
-    @keyframes loaderPulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
-    .loader-finish { transform: translateY(-100%) !important; }
-
-    #website-wrapper { opacity: 0; transition: opacity 1s ease 0.5s; position: relative; width: 100%; }
-    .show-site { opacity: 1 !important; }
-
-    /* --- HEADER (CENTERED) --- */
-    .header { width: 100%; padding: 40px 0 20px; border-bottom: 1px solid rgba(29, 60, 40, 0.1); background: #f3f2e8; position: relative; z-index: 1001; text-align: center; }
-    .tagline { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 6px; font-weight: 700; margin-bottom: 25px; opacity: 0.8; }
-    .brand-title-center { font-size: 38px; font-weight: 900; text-transform: uppercase; letter-spacing: 15px; color: #1d3c28; display: block; }
-    .nav-bar-privacy { display: flex; align-items: center; justify-content: space-between; padding: 0 6%; margin-top: 10px; }
-    .home-btn { text-decoration: none; color: #1d3c28; border: 1.5px solid #1d3c28; padding: 10px 25px; font-size: 12px; font-weight: bold; text-transform: uppercase; transition: 0.3s; }
-    .home-btn:hover { background-color: #1d3c28; color: #f3f2e8; }
-
-    /* --- LOCKED VERTICAL BANNER --- */
-    .vertical-promo { 
-        position: fixed; left: 30px; top: 0; bottom: 0; width: 45px; 
-        background-color: #1d3c28; color: #f3f2e8; 
-        overflow: hidden; display: flex; justify-content: center; z-index: 50; 
-    }
-    .vertical-text-wrap { display: flex; flex-direction: column; animation: scrollUpSeamless 15s linear infinite; }
-    .vertical-text-wrap span { writing-mode: vertical-rl; transform: rotate(180deg); font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 5px; padding: 60px 0; white-space: nowrap; }
-    @keyframes scrollUpSeamless { from { transform: translateY(0); } to { transform: translateY(-50%); } }
-
-    /* PRODUCT CONTENT */
-    .product-container { margin-left: 140px; padding: 60px 6%; display: flex; gap: 80px; align-items: flex-start; flex-wrap: wrap; position: relative; z-index: 500; }
-    .product-slider { flex: 1; min-width: 350px; max-width: 550px; height: 600px; overflow: hidden; position: relative; border: 1px solid rgba(29, 60, 40, 0.1); box-shadow: 0 15px 40px rgba(0,0,0,0.05); cursor: zoom-in; }
-    .slider-track { display: flex; width: 200%; height: 100%; animation: autoSwipe 5s cubic-bezier(0.77, 0, 0.175, 1) infinite; }
-    .slider-track img { width: 50%; height: 100%; object-fit: cover; transition: transform 0.2s ease-out; transform-origin: center center; }
-    .slider-track img.zoomed { transform: scale(2.5); }
-    @keyframes autoSwipe { 0%, 40% { transform: translateX(0); } 50%, 90% { transform: translateX(-50%); } 100% { transform: translateX(0); } }
-
-    /* DISCOUNT NOTE */
-    #discount-note { display: none; color: #d35400; font-weight: bold; margin-bottom: 15px; font-size: 14px; background: #fff3cd; padding: 10px; border-radius: 5px; border-left: 5px solid #d35400; }
-
-    /* CART UI */
-    .cart-section { margin-bottom: 40px; display: flex; flex-direction: column; gap: 15px; }
-    .checkout-btn { background: #1d3c28; color: #f3f2e8; padding: 18px 40px; text-align: center; text-decoration: none; text-transform: uppercase; letter-spacing: 3px; font-weight: bold; font-size: 14px; border-radius: 4px; display: none; width: fit-content; animation: slideDownFade 0.5s ease forwards; }
-    @keyframes slideDownFade { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
-    .add-btn { background: transparent; color: #1d3c28; padding: 18px 50px; border: 1.5px solid #1d3c28; text-transform: uppercase; letter-spacing: 5px; cursor: pointer; font-size: 12px; font-weight: bold; transition: 0.4s; }
-    .qty-selector { display: none; align-items: center; gap: 20px; border: 1.5px solid #1d3c28; width: fit-content; padding: 10px 25px; animation: slideDownFade 0.5s ease forwards; }
-    .qty-btn { background: none; border: none; font-size: 20px; font-weight: bold; cursor: pointer; color: #1d3c28; }
-
-    /* FOOTER (RESTORED) */
-    .footer { background-color: #f3f2e8; padding: 100px 6% 40px 140px; border-top: 1px solid rgba(29, 60, 40, 0.1); display: flex; flex-direction: column; position: relative; z-index: 1001; }
-    .footer-content { width: 100%; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 50px; margin-bottom: 60px; }
-    .footer-section h3 { font-size: 15px; text-transform: uppercase; letter-spacing: 4px; margin-bottom: 25px; font-weight: bold; }
-    .footer-section a { font-size: 14px; color: #1d3c28; text-decoration: none; display: block; margin-bottom: 18px; opacity: 0.7; transition: 0.4s; width: fit-content; cursor: pointer; }
-    .footer-section a:hover { opacity: 1; transform: translateX(12px); font-weight: bold; }
-
-    /* SOCIALS (RIGHT) */
-    .social-float { position: fixed; right: 30px; z-index: 1002; width: 65px; height: 65px; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: 0.3s; font-size: 24px; }
-    .whatsapp-float { bottom: 110px; background-color: #25d366; }
-    .insta-float { bottom: 30px; background: linear-gradient(45deg, #f09433, #bc1888); }
-    .social-float:hover { transform: scale(1.1); }
-
-    @media (max-width: 900px) { .vertical-promo, .social-float { display: none; } .product-container, .footer { margin-left: 0; padding-left: 6%; } }
+    body { background-color: #f3f2e8; color: #1d3c28; font-family: 'Playfair Display', serif; }
+    .header { padding: 40px 6%; text-align: center; border-bottom: 1px solid rgba(0,0,0,0.1); }
+    .product-container { padding: 60px 6%; display: flex; gap: 50px; flex-wrap: wrap; justify-content: center; }
+    .info { max-width: 500px; }
+    #discount-note { display: none; background: #e8f5e9; padding: 15px; border-left: 5px solid #2ecc71; margin-bottom: 20px; font-weight: bold; }
+    .btn { background: #1d3c28; color: #f3f2e8; padding: 15px 40px; border: none; cursor: pointer; font-weight: bold; text-decoration: none; display: inline-block; }
   </style>
 </head>
 <body>
-
-  <!-- LOADER -->
-  <div id="loader"><div class="loader-logo">Secret Herbage</div></div>
-
-  <div id="website-wrapper">
-    <!-- LOCKED LEFT BANNER -->
-    <div class="vertical-promo"><div class="vertical-text-wrap"><span>Delivery all over Pakistan | Buy 1 Get 1 Free</span><span>Delivery all over Pakistan | Buy 1 Get 1 Free</span></div></div>
-
-    <!-- HEADER -->
-    <header class="header">
-      <div class="tagline">Nature's Secret Smile for You</div>
-      <div class="brand-title-center">SECRET HERBAGE</div>
-      <div class="nav-bar-privacy">
-        <a href="index.html" class="home-btn">HOME</a>
-        <div id="cart-display" style="font-weight:bold;">🛒 (0)</div>
+  <header class="header"><h1>SECRET HERBAGE</h1><a href="index.html">Home</a> | <span id="cart-display">🛒 (0)</span></header>
+  <div class="product-container">
+    <div class="info">
+      <h1>Pulling Oil</h1>
+      <div id="discount-note">🎉 50% OFF UNLOCKED!</div>
+      <div style="margin: 20px 0;">
+        <span id="old-price" style="text-decoration:line-through; opacity:0.5; display:none;">Rs. 2,400</span>
+        <span id="current-price" style="font-size:32px; font-weight:bold;">Rs. 2,400</span>
       </div>
-    </header>
-
-    <!-- PRODUCT SECTION -->
-    <div class="product-container">
-      <div class="product-slider" id="main-slider">
-        <div class="slider-track">
-          <img src="pulling-oil-1.jpg" class="zoom-img">
-          <img src="pulling-oil-2.jpg" class="zoom-img">
-        </div>
-      </div>
-      <div class="product-info" style="flex: 1.5;">
-        <h1>Pulling Oil</h1>
-        
-        <!-- Discount Note -->
-        <div id="discount-note">🎉 50% discount has been applied since you have clicked on swish more than 80 times!</div>
-
-        <div style="display: flex; align-items: center; gap: 15px; margin: 20px 0;">
-          <span style="font-size: 22px; text-decoration: line-through; opacity: 0.5;">Rs. 2,700.00</span>
-          <span id="current-price" style="font-size: 32px; font-weight: bold;">Rs. 2,400.00</span>
-          <span id="discount-badge" style="background: #1d3c28; color: #f3f2e8; padding: 5px 12px; font-size: 12px; font-weight: bold;">Buy 1 Get 1 Free</span>
-        </div>
-
-        <div class="cart-section">
-          <a href="javascript:void(0)" class="checkout-btn" id="checkout-link" onclick="handleCheckout()">Proceed to Checkout</a>
-          <button class="add-btn" id="add-to-cart-btn">Add to Cart</button>
-          <div class="qty-selector" id="qty-selector">
-            <button class="qty-btn" onclick="updateQty(-1)">-</button>
-            <span id="qty-display" style="font-weight:bold; font-size:18px;">1</span>
-            <button class="qty-btn" onclick="updateQty(1)">+</button>
-          </div>
-        </div>
-
-        <div style="margin-top: 30px;">
-          <h3 style="text-transform: uppercase; letter-spacing: 2px; border-bottom: 1px solid; display: inline-block; margin-bottom: 15px;">Benefits</h3>
-          <ul style="padding-left: 20px; line-height: 2;">
-            <li>Reduces bad breath & plaque</li>
-            <li>Improves gum health naturally</li>
-            <li>Whitens teeth without chemicals</li>
-            <li>Detoxifies your mouth</li>
-          </ul>
-        </div>
-      </div>
+      <button class="btn" id="add-btn" onclick="addToCart()">Add to Cart</button>
+      <a href="checkout.html" class="btn" id="check-btn" style="display:none; background:#2ecc71;">Proceed to Checkout</a>
     </div>
-
-    <!-- FOOTER (RESTORED) -->
-    <footer class="footer">
-      <div class="footer-content">
-        <div class="footer-section">
-          <h3>Contact Us</h3>
-          <a href="mailto:secretherbage@gmail.com">secretherbage@gmail.com</a>
-          <a href="https://www.google.com/maps/place/Pakistan" target="_blank">Based in Pakistan.</a>
-        </div>
-        <div class="footer-section">
-          <h3>Information</h3>
-          <a href="story.html">Our Story</a>
-          <a href="privacy.html">Privacy Policy</a>
-        </div>
-        <div class="footer-section">
-          <h3>Community</h3>
-          <a href="https://www.instagram.com/secretherbage" target="_blank">Instagram</a>
-          <a href="https://www.facebook.com/secretherbage" target="_blank">Facebook</a>
-        </div>
-      </div>
-      <div style="text-align: center; font-size: 11px; opacity: 0.4;">&copy; 2026 Secret Herbage Pakistan. All Rights Reserved.</div>
-    </footer>
-
-    <!-- SOCIALS -->
-    <a href="https://wa.me/923330341982" class="social-float whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
-    <a href="https://www.instagram.com/secretherbage/" class="social-float insta-float" target="_blank"><i class="fab fa-instagram"></i></a>
   </div>
-
   <script>
-    window.addEventListener('load', () => {
-      setTimeout(() => {
-        document.getElementById('loader').classList.add('loader-finish');
-        document.getElementById('website-wrapper').classList.add('show-site');
-        document.body.style.overflowY = 'visible';
-        checkDiscount();
-      }, 1000);
-    });
-
     function checkDiscount() {
-      const hasDiscount = localStorage.getItem('sh_discount_50') === 'true';
-      if (hasDiscount) {
-        document.getElementById('current-price').innerText = "Rs. 1,200.00";
-        document.getElementById('current-price').style.color = "#d35400";
-        document.getElementById('discount-badge').innerText = "50% OFF APPLIED";
-        document.getElementById('discount-badge').style.background = "#d35400";
+      if(localStorage.getItem('sh_discount_unlocked') === 'true') {
+        document.getElementById('old-price').style.display = "inline";
+        document.getElementById('current-price').innerText = "Rs. 1,200";
         document.getElementById('discount-note').style.display = "block";
       }
     }
-
-    function handleCheckout() {
-      const loader = document.getElementById('loader');
-      loader.classList.remove('loader-finish');
-      setTimeout(() => { window.location.href = 'checkout.html'; }, 1000);
+    function addToCart() {
+      localStorage.setItem('sh_cart_count', 1);
+      document.getElementById('add-btn').style.display = "none";
+      document.getElementById('check-btn').style.display = "inline-block";
+      syncCart();
     }
-
-    const slider = document.getElementById('main-slider');
-    const zoomImages = document.querySelectorAll('.zoom-img');
-    slider.addEventListener('mousemove', (e) => {
-      const rect = slider.getBoundingClientRect();
-      const x = ((e.clientX - rect.left) / rect.width) * 100;
-      const y = ((e.clientY - rect.top) / rect.height) * 100;
-      zoomImages.forEach(img => { img.classList.add('zoomed'); img.style.transformOrigin = `${x}% ${y}%`; });
-    });
-    slider.addEventListener('mouseleave', () => { zoomImages.forEach(img => img.classList.remove('zoomed')); });
-
-    const addBtn = document.getElementById('add-to-cart-btn');
-    const qtySelector = document.getElementById('qty-selector');
-    const checkoutLink = document.getElementById('checkout-link');
-    const qtyDisplay = document.getElementById('qty-display');
-    const cartDisplay = document.getElementById('cart-display');
-
-    function syncUI() {
-      let count = parseInt(localStorage.getItem('sh_cart_count') || 0);
-      cartDisplay.innerText = `🛒 (${count})`;
-      if (count > 0) {
-        addBtn.style.display = 'none';
-        qtySelector.style.display = 'flex';
-        checkoutLink.style.display = 'block';
-        qtyDisplay.innerText = count;
-      } else {
-        addBtn.style.display = 'block';
-        qtySelector.style.display = 'none';
-        checkoutLink.style.display = 'none';
-      }
-    }
-
-    addBtn.addEventListener('click', () => { localStorage.setItem('sh_cart_count', 1); syncUI(); });
-    window.updateQty = function(val) {
-      let count = parseInt(localStorage.getItem('sh_cart_count') || 0) + val;
-      if (count < 0) count = 0;
-      localStorage.setItem('sh_cart_count', count);
-      syncUI();
-    }
+    function syncCart() { document.getElementById('cart-display').innerText = `🛒 (${localStorage.getItem('sh_cart_count') || 0})`; }
+    window.onload = () => { checkDiscount(); syncCart(); };
   </script>
 </body>
 </html>
