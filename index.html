@@ -49,7 +49,7 @@
     .brand-title-center { position: absolute; left: 50%; transform: translateX(-50%); font-size: 28px; font-weight: 900; text-transform: uppercase; letter-spacing: 12px; color: #1d3c28; pointer-events: none; white-space: nowrap; }
     .nav-right { display: flex; align-items: center; gap: 40px; }
     
-    /* CART DROPDOWN (NEW) */
+    /* CART DROPDOWN */
     .cart-wrapper { position: relative; }
     .cart-btn { text-decoration: none; color: #1d3c28; font-size: 18px; font-weight: bold; cursor: pointer; padding: 5px; }
     .cart-dropdown-menu {
@@ -124,6 +124,15 @@
     #hurray-popup { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: none; justify-content: center; align-items: center; z-index: 1000005; }
     .hurray-card { background: #f3f2e8; color: #1d3c28; padding: 50px; border-radius: 25px; text-align: center; max-width: 450px; transform: scale(0.5); transition: 0.5s; }
     .hurray-card.show { transform: scale(1); }
+
+    /* --- MOBILE OVERLAP FIX --- */
+    @media (max-width: 850px) {
+        .brand-title-center { display: none !important; } /* Hide center title on mobile */
+        .brand-logo { height: 65px !important; } /* Shrink logo */
+        .nav-bar { padding: 10px 4% !important; }
+        .nav-right { gap: 15px !important; }
+        .dropbtn, .cart-btn { font-size: 12px !important; letter-spacing: 1px !important; }
+    }
   </style>
 </head>
 <body>
@@ -144,7 +153,6 @@
           <div class="dropdown"><button class="dropbtn">Oral Care ▾</button><div class="dropdown-content"><a href="javascript:void(0)" onclick="handleNavigation('product.html')">PULLING OIL</a><a href="#">CHARCOAL TOOTHPASTE (SOON)</a></div></div>
           <div class="dropdown"><button class="dropbtn">Fun ▾</button><div class="dropdown-content"><a href="javascript:void(0)" onclick="openSwishGame()">MAINTAIN YOUR ORAL HYGIENE</a></div></div>
           
-          <!-- CART WITH DROPDOWN -->
           <div class="cart-wrapper">
             <div class="cart-btn" id="cart-display">🛒 (0)</div>
             <div class="cart-dropdown-menu" id="cart-menu">
@@ -152,7 +160,6 @@
                <a href="checkout.html" class="checkout-btn-small" id="checkout-link" style="display:none;">PROCEED TO CHECKOUT</a>
             </div>
           </div>
-
         </div>
       </nav>
     </header>
@@ -161,7 +168,6 @@
       <div class="promo-banner"><div class="banner-wrap"><span>Delivery all over Pakistan | Buy 1 Get 1 Free</span><span>Delivery all over Pakistan | Buy 1 Get 1 Free</span><span>Delivery all over Pakistan | Buy 1 Get 1 Free</span><span>Delivery all over Pakistan | Buy 1 Get 1 Free</span></div></div>
       <section class="hero"><h1>Nature’s Purest <br> Secrets, Revealed.</h1><button class="shop-now" onclick="handleNavigation('product.html')">Explore Shop</button></section>
       
-      <!-- REVIEWS -->
       <section class="reviews-section">
         <div class="rating-summary"><span>4.5 / 5</span><div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div></div>
         <div class="reviews-grid">
@@ -181,7 +187,6 @@
       <div class="copyright">&copy; 2026 Secret Herbage Pakistan. All Rights Reserved.</div>
     </footer>
 
-    <!-- AI ASSISTANT -->
     <div id="ai-assistant">
       <button class="ai-btn" onclick="toggleChat()"><i class="fas fa-robot"></i></button>
       <div class="chat-window" id="chat-window">
@@ -194,31 +199,26 @@
       </div>
     </div>
 
-    <!-- PROMO BOTTLE -->
     <div id="bottle-promo-container" onclick="handleNavigation('product.html')">
       <div class="promo-text-bubble">Anti-Aging Starts with Your Smile — Buy 1 Get 1 Free</div>
       <img src="bottle.png" class="promo-bottle-img" alt="Bottle">
     </div>
 
-    <!-- SOCIALS -->
     <a href="https://wa.me/923330341982" class="social-float whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
     <a href="https://www.instagram.com/secretherbage/" class="social-float insta-float" target="_blank"><i class="fab fa-instagram"></i></a>
   </div>
 
-  <!-- GAME OVERLAYS -->
   <div id="swish-game-overlay"><div class="game-card"><span class="close-game" onclick="closeSwishGame()" style="position:absolute; top:10px; right:20px; font-size:30px; cursor:pointer;">&times;</span><h2>SWISH CHALLENGE</h2><div style="display:flex; justify-content:space-around; margin:20px 0; font-weight:bold;"><div>TIME: <span id="game-sec">10</span>s</div><div>SWISHES: <span id="game-count">0</span></div></div><button id="swish-action-btn" onclick="addSwish()" disabled>Swish!</button><br><button onclick="startSwishGame()" style="margin-top:20px; padding:10px 30px; background:#1d3c28; color:#f3f2e8; border:none; border-radius:50px; cursor:pointer;">Start Game</button></div></div>
   <div id="hurray-popup"><div class="hurray-card" id="hurray-card"><h1>🎉</h1><p id="hurray-msg" style="font-weight:bold; margin:20px 0;">Hurray! Excellent hygiene!</p><button onclick="closeHurray()" style="padding:10px 30px; background:#25d366; color:#fff; border:none; border-radius:50px; cursor:pointer;">Great!</button></div></div>
   <audio id="victory-sound" src="victory.mp3"></audio>
 
   <script>
-    // LOADER & INITIAL LOAD
     window.addEventListener('load', () => {
       setTimeout(() => { document.getElementById('loader').classList.add('loader-finish'); document.getElementById('website').classList.add('show-site'); document.body.style.overflowY = 'visible'; }, 9500);
       setTimeout(() => { document.getElementById('bottle-promo-container').classList.add('animate-promo'); }, 10500);
       updateCartUI();
     });
 
-    // NAVIGATION
     function handleNavigation(url) { 
         const loader = document.getElementById('loader');
         loader.classList.remove('loader-finish');
@@ -227,20 +227,13 @@
         setTimeout(() => { window.location.href = url; }, 1200); 
     }
 
-    // CART LOGIC
     function updateCartUI() {
       const count = parseInt(localStorage.getItem('sh_cart_count') || 0);
       document.getElementById('cart-display').innerText = `🛒 (${count})`;
       const list = document.getElementById('cart-items-list');
       const checkoutLink = document.getElementById('checkout-link');
-
       if (count > 0) {
-        list.innerHTML = `
-          <div class="cart-item-row">
-            <span>Pulling Oil (${count})</span>
-            <button class="remove-cart-item" onclick="removeOneFromCart()">-</button>
-          </div>
-        `;
+        list.innerHTML = `<div class="cart-item-row"><span>Pulling Oil (${count})</span><button class="remove-cart-item" onclick="removeOneFromCart()">-</button></div>`;
         checkoutLink.style.display = "block";
       } else {
         list.innerHTML = `<div style="font-size:12px; opacity:0.6;">Cart is empty</div>`;
@@ -250,28 +243,17 @@
 
     function removeOneFromCart() {
       let count = parseInt(localStorage.getItem('sh_cart_count') || 0);
-      if (count > 0) {
-        count--;
-        localStorage.setItem('sh_cart_count', count);
-        updateCartUI();
-      }
+      if (count > 0) { count--; localStorage.setItem('sh_cart_count', count); updateCartUI(); }
     }
 
-    // AI CHAT
     function toggleChat() { const win = document.getElementById('chat-window'); win.style.display = win.style.display === 'flex' ? 'none' : 'flex'; }
     function showOption(type) {
       const body = document.getElementById('chat-body');
-      if(type === 'policy') {
-        body.innerHTML = `<div class="chat-msg"><b>Refund & Policy:</b> Secret Herbage is committed to providing safe service. Damaged product? Contact us via WhatsApp for a replacement.</div><button style="background:none; border:none; text-decoration:underline; cursor:pointer;" onclick="resetChat()">Back</button>`;
-      } else if(type === 'discount') {
-        body.innerHTML = `<div class="chat-msg"><b>Unlock 50% OFF:</b> Start Swish Challenge. Click 80 times in 10s to win!</div><button style="background:none; border:none; text-decoration:underline; cursor:pointer;" onclick="resetChat()">Back</button>`;
-      }
+      if(type === 'policy') { body.innerHTML = `<div class="chat-msg"><b>Refund & Policy:</b> Secret Herbage is committed to providing safe service. Damaged product? Contact us via WhatsApp for a replacement.</div><button style="background:none; border:none; text-decoration:underline; cursor:pointer;" onclick="resetChat()">Back</button>`; } 
+      else if(type === 'discount') { body.innerHTML = `<div class="chat-msg"><b>Unlock 50% OFF:</b> Start Swish Challenge. Click 80 times in 10s to win!</div><button style="background:none; border:none; text-decoration:underline; cursor:pointer;" onclick="resetChat()">Back</button>`; }
     }
-    function resetChat() {
-      document.getElementById('chat-body').innerHTML = `<p class="chat-msg">Hello! How can I help you today?</p><button class="ai-option-btn" onclick="showOption('policy')">Refund/Policy</button><button class="ai-option-btn" onclick="showOption('discount')">How To get 50% OFF</button>`;
-    }
+    function resetChat() { document.getElementById('chat-body').innerHTML = `<p class="chat-msg">Hello! How can I help you today?</p><button class="ai-option-btn" onclick="showOption('policy')">Refund/Policy</button><button class="ai-option-btn" onclick="showOption('discount')">How To get 50% OFF</button>`; }
 
-    // GAME LOGIC
     let sScore = 0, sTime = 10, sClock, sActive = false;
     function openSwishGame() { document.getElementById('swish-game-overlay').style.display = 'flex'; resetSwish(); }
     function closeSwishGame() { document.getElementById('swish-game-overlay').style.display = 'none'; clearInterval(sClock); sActive = false; }
@@ -281,12 +263,8 @@
         sTime--; document.getElementById('game-sec').innerText = sTime;
         if (sTime <= 0) {
           clearInterval(sClock); sActive = false; document.getElementById('swish-action-btn').disabled = true;
-          document.getElementById('victory-sound').play().catch(e=>{});
           const msg = document.getElementById('hurray-msg');
-          if (sScore >= 80) { 
-              localStorage.setItem('sh_game_won', 'true'); // SYNC WITH CHECKOUT
-              msg.innerHTML = "Hurray! Excellent hygiene & 50% OFF UNLOCKED!"; 
-          }
+          if (sScore >= 80) { localStorage.setItem('sh_game_won', 'true'); msg.innerHTML = "Hurray! Excellent hygiene & 50% OFF UNLOCKED!"; }
           else { msg.innerText = "Hurray! You have maintained your oral hygiene"; }
           document.getElementById('hurray-popup').style.display = 'flex';
           setTimeout(() => document.getElementById('hurray-card').classList.add('show'), 10);
@@ -296,7 +274,6 @@
     function addSwish() { if (sActive) { sScore++; document.getElementById('game-count').innerText = sScore; } }
     function closeHurray() { document.getElementById('hurray-card').classList.remove('show'); setTimeout(() => { document.getElementById('hurray-popup').style.display = 'none'; resetSwish(); }, 500); }
     function resetSwish() { sScore = 0; sTime = 10; document.getElementById('game-count').innerText = 0; document.getElementById('game-sec').innerText = 10; }
-
     window.addEventListener('storage', updateCartUI);
   </script>
 </body>
