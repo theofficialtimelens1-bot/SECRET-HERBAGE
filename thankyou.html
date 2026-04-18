@@ -2,65 +2,23 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Thank You | Secret Herbage</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { 
-      background-color: #f3f2e8; 
-      color: #1d3c28; 
-      font-family: 'Playfair Display', serif; 
-      height: 100vh; 
-      display: flex; 
-      align-items: center; 
-      justify-content: center; 
-      text-align: center; 
-    }
-    .card { 
-      max-width: 600px; 
-      padding: 40px; 
-      background: white; 
-      border-radius: 15px; 
-      box-shadow: 0 15px 40px rgba(0,0,0,0.05); 
-    }
-    .check-icon { 
-      font-size: 60px; 
-      color: #1877F2; /* Meta Blue */
-      margin-bottom: 20px; 
-    }
-    h1 { 
-      color: #1877F2; /* Meta Blue */
-      font-size: 28px; 
-      margin-bottom: 20px; 
-    }
-    p { 
-      font-size: 18px; 
-      line-height: 1.6; 
-      color: #555; 
-      margin-bottom: 30px; 
-    }
-    .back-home { 
-      text-decoration: none; 
-      color: #1d3c28; 
-      font-weight: bold; 
-      border-bottom: 2px solid #1d3c28; 
-      padding-bottom: 5px; 
-      text-transform: uppercase; 
-      letter-spacing: 1px; 
-    }
+    body { background: #f3f2e8; color: #1d3c28; font-family: 'Playfair Display', serif; display: flex; align-items: center; justify-content: center; height: 100vh; text-align: center; }
+    .card { animation: pop 0.8s ease; }
+    @keyframes pop { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    h1 { font-size: 80px; font-weight: 900; margin-bottom: 20px; }
+    p { font-family: 'Montserrat', sans-serif; font-size: 20px; opacity: 0.7; margin-bottom: 40px; }
+    .btn { text-decoration: none; color: #1d3c28; font-weight: bold; border-bottom: 3px solid #1d3c28; font-size: 18px; text-transform: uppercase; letter-spacing: 5px; }
   </style>
 </head>
 <body>
   <div class="card">
-    <div class="check-icon">✓</div>
-    <h1>Thank you for your order!</h1>
-    <p>Your order has been received and will be processed shortly. Our team will contact you via WhatsApp to confirm the details.</p>
-    <a href="Untitled-2.html" class="back-home">Continue Shopping</a>
+    <i class="fas fa-crown" style="font-size: 60px; margin-bottom: 20px;"></i>
+    <h1>Thank You.</h1>
+    <p>Your order is confirmed. We will contact you via WhatsApp shortly!</p>
+    <a href="index.html" class="btn">Back to Home</a>
   </div>
-
-  <script>
-    // Order hone ke baad cart zero kar dein
-    localStorage.setItem('sh_cart_count', 0);
-  </script>
 </body>
 </html>
