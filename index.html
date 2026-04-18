@@ -271,7 +271,7 @@
           clearInterval(sClock); sActive = false;
           document.getElementById('swish-action-btn').disabled = true;
           document.getElementById('start-btn-game').style.display = 'inline-block';
-          if (sScore >= 80) { localStorage.setItem('sh_game_won', 'true'); document.getElementById('hurray-msg').innerHTML = "Winner! 50% OFF Unlocked!"; victorySound.play(); }
+          if (sScore >= 10) { localStorage.setItem('sh_game_won', 'true'); document.getElementById('hurray-msg').innerHTML = "Winner! 50% OFF Unlocked!"; victorySound.play(); }
           else { document.getElementById('hurray-msg').innerText = "Try again!"; }
           document.getElementById('hurray-popup').style.display = 'flex';
         }
