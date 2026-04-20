@@ -258,7 +258,7 @@
           clearInterval(sClock); sActive = false; document.getElementById('swish-action-btn').disabled = true;
           document.getElementById('victory-sound').play().catch(e=>{});
           const msg = document.getElementById('hurray-msg');
-          if (sScore >= 80) { localStorage.setItem('sh_discount_50', 'true'); msg.innerHTML = "Hurray! Excellent hygiene & 50% OFF UNLOCKED!"; }
+          if (sScore >= 1) { localStorage.setItem('sh_discount_50', 'true'); msg.innerHTML = "Hurray! Excellent hygiene & 50% OFF UNLOCKED!"; }
           else { msg.innerText = "Hurray! You have maintained your oral hygiene"; }
           document.getElementById('hurray-popup').style.display = 'flex';
           setTimeout(() => document.getElementById('hurray-card').classList.add('show'), 10);
