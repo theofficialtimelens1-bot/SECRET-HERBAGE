@@ -11,21 +11,30 @@
     html, body { background-color: #f3f2e8; overflow-x: hidden; width: 100%; position: relative; }
     body { color: #1d3c28; font-family: 'Playfair Display', serif, 'Times New Roman'; margin: 0; height: 100vh; overflow-y: hidden; }
 
-    /* --- SHUTTER LOADER --- */
+    /* --- SHUTTER LOADER (FIXED CENTERING) --- */
     #loader {
       position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
       background: #1d3c28; display: flex; justify-content: center; align-items: center;
       z-index: 9999999; transition: transform 1s cubic-bezier(0.85, 0, 0.15, 1);
       transform: translateY(0);
     }
-    .loader-logo { color: #f3f2e8; font-size: 28px; letter-spacing: 15px; text-transform: uppercase; animation: loaderPulse 1.5s infinite; }
+    .loader-logo { 
+      color: #f3f2e8; 
+      font-size: 28px; 
+      letter-spacing: 15px; 
+      text-indent: 15px; /* Yeh zaroori hai letter-spacing ko balance karne ke liye */
+      text-transform: uppercase; 
+      animation: loaderPulse 1.5s infinite; 
+      text-align: center;
+      width: 100%;
+    }
     @keyframes loaderPulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
     .loader-finish { transform: translateY(-100%) !important; }
 
     #website-wrapper { opacity: 0; transition: opacity 1s ease 0.5s; position: relative; width: 100%; }
     .show-site { opacity: 1 !important; }
 
-    /* --- HEADER (CENTERED) --- */
+    /* --- HEADER (MOBILE FRIENDLY) --- */
     .header { width: 100%; padding: 40px 0 20px; border-bottom: 1px solid rgba(29, 60, 40, 0.1); background: #f3f2e8; position: relative; z-index: 1001; text-align: center; }
     .tagline { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 6px; font-weight: 700; margin-bottom: 25px; opacity: 0.8; }
     .brand-title-center { font-size: 38px; font-weight: 900; text-transform: uppercase; letter-spacing: 15px; color: #1d3c28; display: block; }
@@ -51,9 +60,6 @@
     .slider-track img.zoomed { transform: scale(2.5); }
     @keyframes autoSwipe { 0%, 40% { transform: translateX(0); } 50%, 90% { transform: translateX(-50%); } 100% { transform: translateX(0); } }
 
-    /* DISCOUNT NOTE */
-    #discount-note { display: none; color: #d35400; font-weight: bold; margin-bottom: 15px; font-size: 14px; background: #fff3cd; padding: 10px; border-radius: 5px; border-left: 5px solid #d35400; }
-
     /* CART UI */
     .cart-section { margin-bottom: 40px; display: flex; flex-direction: column; gap: 15px; }
     .checkout-btn { background: #1d3c28; color: #f3f2e8; padding: 18px 40px; text-align: center; text-decoration: none; text-transform: uppercase; letter-spacing: 3px; font-weight: bold; font-size: 14px; border-radius: 4px; display: none; width: fit-content; animation: slideDownFade 0.5s ease forwards; }
@@ -62,20 +68,30 @@
     .qty-selector { display: none; align-items: center; gap: 20px; border: 1.5px solid #1d3c28; width: fit-content; padding: 10px 25px; animation: slideDownFade 0.5s ease forwards; }
     .qty-btn { background: none; border: none; font-size: 20px; font-weight: bold; cursor: pointer; color: #1d3c28; }
 
-    /* FOOTER (RESTORED) */
+    /* FOOTER */
     .footer { background-color: #f3f2e8; padding: 100px 6% 40px 140px; border-top: 1px solid rgba(29, 60, 40, 0.1); display: flex; flex-direction: column; position: relative; z-index: 1001; }
     .footer-content { width: 100%; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 50px; margin-bottom: 60px; }
     .footer-section h3 { font-size: 15px; text-transform: uppercase; letter-spacing: 4px; margin-bottom: 25px; font-weight: bold; }
     .footer-section a { font-size: 14px; color: #1d3c28; text-decoration: none; display: block; margin-bottom: 18px; opacity: 0.7; transition: 0.4s; width: fit-content; cursor: pointer; }
     .footer-section a:hover { opacity: 1; transform: translateX(12px); font-weight: bold; }
 
-    /* SOCIALS (RIGHT) */
+    /* SOCIALS */
     .social-float { position: fixed; right: 30px; z-index: 1002; width: 65px; height: 65px; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: 0.3s; font-size: 24px; }
     .whatsapp-float { bottom: 110px; background-color: #25d366; }
     .insta-float { bottom: 30px; background: linear-gradient(45deg, #f09433, #bc1888); }
-    .social-float:hover { transform: scale(1.1); }
 
-    @media (max-width: 900px) { .vertical-promo, .social-float { display: none; } .product-container, .footer { margin-left: 0; padding-left: 6%; } }
+    /* MOBILE ADJUSTMENTS */
+    @media (max-width: 900px) { 
+      .vertical-promo, .social-float { display: none; } 
+      .product-container, .footer { margin-left: 0; padding-left: 6%; } 
+    }
+
+    @media (max-width: 600px) {
+      .loader-logo { font-size: 18px; letter-spacing: 8px; text-indent: 8px; }
+      .brand-title-center { font-size: 22px; letter-spacing: 5px; }
+      .tagline { font-size: 9px; letter-spacing: 3px; }
+      .product-slider { min-width: 100%; height: 400px; }
+    }
   </style>
 </head>
 <body>
@@ -84,20 +100,17 @@
   <div id="loader"><div class="loader-logo">Secret Herbage</div></div>
 
   <div id="website-wrapper">
-    <!-- LOCKED LEFT BANNER -->
     <div class="vertical-promo"><div class="vertical-text-wrap"><span>Delivery all over Pakistan</span><span>Delivery all over Pakistan</span></div></div>
 
-    <!-- HEADER -->
     <header class="header">
       <div class="tagline">Nature's Secret Smile for You</div>
       <div class="brand-title-center">SECRET HERBAGE</div>
       <div class="nav-bar-privacy">
-        <a href="/" class="home-btn">HOME</a>
+        <a href="index.html" class="home-btn">HOME</a>
         <div id="cart-display" style="font-weight:bold;">🛒 (0)</div>
       </div>
     </header>
 
-    <!-- PRODUCT SECTION -->
     <div class="product-container">
       <div class="product-slider" id="main-slider">
         <div class="slider-track">
@@ -107,9 +120,7 @@
       </div>
       <div class="product-info" style="flex: 1.5;">
         <h1>Pulling Oil</h1>
-        
-        <!-- Discount Note -->
-        <div id="discount-note">🎉 50% discount has been applied since you have clicked on swish more than 80 times!</div>
+        <div id="discount-note" style="display:none; color: #d35400; font-weight: bold; margin-bottom: 15px; font-size: 14px; background: #fff3cd; padding: 10px; border-radius: 5px; border-left: 5px solid #d35400;">🎉 50% discount has been applied!</div>
 
         <div style="display: flex; align-items: center; gap: 15px; margin: 20px 0;">
           <span style="font-size: 22px; text-decoration: line-through; opacity: 0.5;">Rs. 2,700.00</span>
@@ -139,13 +150,12 @@
       </div>
     </div>
 
-    <!-- FOOTER (RESTORED) -->
     <footer class="footer">
       <div class="footer-content">
         <div class="footer-section">
           <h3>Contact Us</h3>
           <a href="mailto:secretherbage@gmail.com">secretherbage@gmail.com</a>
-          <a href="https://www.google.com/maps/place/Pakistan" target="_blank">Based in Pakistan.</a>
+          <a href="#">Based in Pakistan.</a>
         </div>
         <div class="footer-section">
           <h3>Information</h3>
@@ -155,13 +165,11 @@
         <div class="footer-section">
           <h3>Community</h3>
           <a href="https://www.instagram.com/secretherbage" target="_blank">Instagram</a>
-          <a href="https://www.facebook.com/secretherbage" target="_blank">Facebook</a>
         </div>
       </div>
-      <div style="text-align: center; font-size: 11px; opacity: 0.4;">&copy; 2026 Secret Herbage Pakistan. All Rights Reserved.</div>
+      <div style="text-align: center; font-size: 11px; opacity: 0.4;">&copy; 2026 Secret Herbage Pakistan.</div>
     </footer>
 
-    <!-- SOCIALS -->
     <a href="https://wa.me/923330341982" class="social-float whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
     <a href="https://www.instagram.com/secretherbage/" class="social-float insta-float" target="_blank"><i class="fab fa-instagram"></i></a>
   </div>
@@ -231,6 +239,7 @@
       localStorage.setItem('sh_cart_count', count);
       syncUI();
     }
+    syncUI();
   </script>
 </body>
 </html>
